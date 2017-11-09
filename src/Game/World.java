@@ -7,10 +7,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/*
- * Clase encargada de crear y acargar al Mundo
- */
+/** Clase encargada de crear y acargar al Mundo */
 public class World {
+    //CONSTANTES
+    private final int ANCHO = 600;
+    private final int ALTO = 2400;
     
     private JLabel world_1;
     private JLabel world_2;
@@ -21,25 +22,21 @@ public class World {
         initComponentsWorld();
     }
     
-    /*
-     * Inicia Componentes en su valor por defecto
-    */
+    /** Inicia Componentes en su valor por defecto */
     public void initComponentsWorld(){  
         
         world_1 = new JLabel(new ImageIcon("Resources/world/world.png"));
-        world_1.setBounds(0, -1800, 600, 2400);
+        world_1.setBounds(0, -1800, ANCHO, ALTO);
         
         world_2 = new JLabel(new ImageIcon("Resources/world/world.png")); 
-        world_2.setBounds(0, -2400, 600, 2400);
+        world_2.setBounds(0, -2400, ANCHO, ALTO);
 
         changeWorld = true;   
         
         SPEED = 2;
     }
     
-    /*
-    * Algoritmo de Movimiento independiente infinito
-    */   
+    /** Algoritmo de Movimiento independiente infinito */   
     public void moveWorld(){
         
         if(changeWorld == true){
@@ -77,7 +74,9 @@ public class World {
         
     }
     
-    
+    /** Eventos del teclado para el mundo
+     * @param game Panel del juego al que aplican los eventos de teclado
+     */
     public void eventos(JPanel game){
         game.addKeyListener(new KeyListener(){
             @Override
@@ -107,16 +106,16 @@ public class World {
     /************************ GETTERS *************************/
     /**********************************************************/
     
-    /*
-    * Retorna world_1
-    */
+    /** Retorna world_1
+     * @return world_1 Primer mundo que aparece
+     */
     public JLabel getWorld_1() {
         return world_1;
     }
     
-    /*
-    * Retorna world_2
-    */
+    /** Retorna world_2
+     * @return  world_2 Segundo mundo que se carga para seguir avanzando
+     */
     public JLabel getWorld_2() {
         return world_2;
     }

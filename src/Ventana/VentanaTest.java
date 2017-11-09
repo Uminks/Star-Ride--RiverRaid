@@ -5,6 +5,7 @@
  */
 package Ventana;
 
+import Game.RunGame;
 import Graficos.Menu;
 import javax.swing.JFrame;
 
@@ -23,7 +24,8 @@ public class VentanaTest extends JFrame{
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         
-        this.add(new Menu());
+        //this.add(new Menu());
+        this.add(new RunGame());
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
