@@ -5,73 +5,34 @@
  */
 package Ventana;
 
-import Game.Player;
-import Game.World;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import Graficos.Menu;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+
 
 /**
  *
- * @author Brayan Montañez
+ * @author Brayan Montañez & Luis Vargas
  */
-public class VentanaTest {
 
-    private JFrame ventana;
-    private JPanel game;
-    World mundo;
-    Player player;
+public class VentanaTest extends JFrame{
     
-    public void hola(){
-        ventana= new JFrame("hola");
-        ventana.setLayout(null);
-        ventana.setBounds(0, 0, 800, 600);
+    public VentanaTest(){
         
-        game = new JPanel();
-        game.setLayout(null);
-        game.setBounds(0, 0, 600, 600);
+        this.setBounds(0, 0, 800, 600);
+        this.setTitle("Star Raid");
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
         
+        this.add(new Menu());
         
-        mundo = new World();
-        player = new Player();
-         
-        
-       
-        player.eventos(game);
-        mundo.eventos(game);
-        game.setFocusable(true);
-        game.add(player.getPlayer());
-        game.add(mundo.getWorld_1());
-        game.add(mundo.getWorld_2());
-        
-        ventana.add(game);
-        ventana.setVisible(true);
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
     }
-    
-
-    
-    public World getMundo() {
-        return mundo;
-    }   
-    
+ 
     public static void main(String[] args) {
-       VentanaTest ventana = new VentanaTest();
-       ventana.hola();
        
-       Timer timer = new Timer(10, new ActionListener(){
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               ventana.getMundo().moveWorld();
-               System.out.println(ventana.getMundo().getWorld_2().getY());
-           }
-       
-       });
-       
-       timer.start();
+        VentanaTest test = new VentanaTest();
+        
     }
     
 }
