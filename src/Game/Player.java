@@ -16,7 +16,8 @@ public class Player {
     //CONSTANTES
     private final int ANCHO = 110;
     private final int ALTO = 130;
-    
+    private int Mover_Left = 10;
+    private int Mover_Right = 10;
     
     private JLabel player;
     
@@ -48,10 +49,10 @@ public class Player {
             public void keyPressed(KeyEvent e) {
                               
                 if(e.getKeyCode() == KeyEvent.VK_LEFT){
-                    player.setLocation(player.getX()-10, player.getY());
+                    player.setLocation(player.getX()-Mover_Left, player.getY());
                 }
                 if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-                    player.setLocation(player.getX()+10, player.getY());
+                    player.setLocation(player.getX()+Mover_Right, player.getY());
                 }
             
             }
@@ -64,12 +65,28 @@ public class Player {
     /**********************************************************/
     /************************ GETTERS *************************/
     /**********************************************************/
-    
+
     /** Retorna player
      * @return player juagaror del juego y todos sus componentes
      */
     public JLabel getPlayer() {
         return player;
     }
-       
+    
+    /**
+     * 
+     * @param Mover_Left Es el indicador por izquierda del movimiento que viene de la colision
+     */
+    public void setMover_Left(int Mover_Left) {
+        this.Mover_Left= Mover_Left;
+    }
+    
+    /**
+     * 
+     * @param Mover_Right Es el indicador por derecha del movimiento que viene de la colision
+     */
+    public void setMover_Right(int Mover_Right) {
+        this.Mover_Right = Mover_Right;
+    }
+     
 }

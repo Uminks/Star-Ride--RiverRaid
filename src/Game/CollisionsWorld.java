@@ -12,11 +12,10 @@ public class CollisionsWorld {
     private final int ALTO_NORMAL = 2400;
     
     
-    public JLabel borderCollisionsLeft;
-    public JLabel borderCollisionsRight;
-    public JLabel borderCollisions;
-
-    
+    private JLabel borderCollisionsLeft;
+    private JLabel borderCollisionsRight;
+    private JLabel borderCollisions;
+  
     public CollisionsWorld(){
         initComponentsCollisions();
     }
@@ -33,7 +32,7 @@ public class CollisionsWorld {
 
     }
 
-    
+        
     /**********************************************************/
     /************************ GETTERS *************************/
     /**********************************************************/

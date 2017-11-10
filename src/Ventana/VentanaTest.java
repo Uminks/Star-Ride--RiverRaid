@@ -6,7 +6,6 @@
 package Ventana;
 
 import Game.RunGame;
-import Graficos.Menu;
 import javax.swing.JFrame;
 
 

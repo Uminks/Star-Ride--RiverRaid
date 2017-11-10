@@ -19,6 +19,7 @@ public class RunGame extends JPanel{
     private World mundo;
     private Player player;
     private CollisionsWorld colisiones;
+    private DetectorDeColisiones detectorColisiones;
     
     public RunGame(){
         
@@ -29,7 +30,7 @@ public class RunGame extends JPanel{
         mundo = new World();
         player = new Player();
         colisiones = new CollisionsWorld();
-        
+        detectorColisiones = new DetectorDeColisiones();
        
         player.eventos(this);
         mundo.eventos(this);
@@ -55,6 +56,7 @@ public class RunGame extends JPanel{
            @Override
            public void actionPerformed(ActionEvent e) {
                getMundo().moveWorld();
+               detectorColisiones.BorderCollisions(player, colisiones);
            }
        
        });

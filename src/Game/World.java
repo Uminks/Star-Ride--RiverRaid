@@ -15,7 +15,7 @@ public class World {
     
     private JLabel world_1;
     private JLabel world_2;
-    public int SPEED;
+    private int SPEED;
     private boolean changeWorld;
     
     public World(){                     
