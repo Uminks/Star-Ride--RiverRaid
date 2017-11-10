@@ -18,17 +18,18 @@ public class World {
     private int SPEED;
     private boolean changeWorld;
     
-    public World(){                     
+    public World(){
+        world_1 = new JLabel(new ImageIcon("Resources/world/world.png"));
+        world_2 = new JLabel(new ImageIcon("Resources/world/world.png")); 
         initComponentsWorld();
     }
     
     /** Inicia Componentes en su valor por defecto */
     public void initComponentsWorld(){  
         
-        world_1 = new JLabel(new ImageIcon("Resources/world/world.png"));
-        world_1.setBounds(0, -1800, ANCHO, ALTO);
         
-        world_2 = new JLabel(new ImageIcon("Resources/world/world.png")); 
+        world_1.setBounds(0, -1800, ANCHO, ALTO);      
+        
         world_2.setBounds(0, -2400, ANCHO, ALTO);
 
         changeWorld = true;   
@@ -85,8 +86,8 @@ public class World {
             @Override
             public void keyPressed(KeyEvent e) {
                 
-                if(e.getKeyCode() == KeyEvent.VK_UP){                      
-                    SPEED = 10;                     
+                if(e.getKeyCode() == KeyEvent.VK_UP && SPEED >0){                      
+                    SPEED = 4;                     
                 }                            
                 
             }
@@ -119,5 +120,14 @@ public class World {
     public JLabel getWorld_2() {
         return world_2;
     }
+    
+    /**
+     * 
+     * @param SPEED Modifica la velocidad de desplazamiento
+     */ 
+    public void setSPEED(int SPEED) {
+        this.SPEED = SPEED;
+    } 
+    
     
 }

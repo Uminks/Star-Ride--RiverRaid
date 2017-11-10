@@ -22,17 +22,19 @@ public class Player {
     private JLabel player;
     
     public Player(){
+        player = new JLabel();
+        player.setBounds(245, 420, ANCHO, ALTO); 
+        ImageIcon ima = new ImageIcon("Resources/player/xwing.png");
+        Icon image = new ImageIcon(ima.getImage().getScaledInstance(player.getWidth(), player.getHeight(), Image.SCALE_SMOOTH));
+    
+        player.setIcon(image); 
         initComponentsPlayer();
     }
     
     /** Inicia Componentes en su valor por defecto */
     public void initComponentsPlayer(){
-        player = new JLabel();
-        player.setBounds(245, 420, ANCHO, ALTO);
-        ImageIcon ima = new ImageIcon("Resources/player/xwing.png");
-        Icon image = new ImageIcon(ima.getImage().getScaledInstance(player.getWidth(), player.getHeight(), Image.SCALE_SMOOTH));
-    
-        player.setIcon(image);   
+        
+        player.setBounds(245, 420, ANCHO, ALTO);       
         //Para Probar colisiones    
         player.setBorder(new LineBorder(Color.RED));
     }

@@ -37,8 +37,11 @@ public class RunGame extends JPanel{
         
         this.setFocusable(true);
         this.add(player.getPlayer());
-        this.add(colisiones.getBorderCollisionsLeft());
-        this.add(colisiones.getBorderCollisionsRight());
+        for (int i = 0; i < colisiones.getConjuntoCollisionsLeft().length; i++) {
+            this.add(colisiones.getConjuntoCollisionsLeft(i));
+            this.add(colisiones.getConjuntoCollisionsRight(i));
+        }      
+
         this.add(mundo.getWorld_1());
         this.add(mundo.getWorld_2());
         
@@ -55,8 +58,13 @@ public class RunGame extends JPanel{
         Timer timer = new Timer(18, new ActionListener(){
            @Override
            public void actionPerformed(ActionEvent e) {
+               
                getMundo().moveWorld();
-               detectorColisiones.BorderCollisions(player, colisiones);
+               colisiones.moverColisionesLeft();
+               colisiones.moverColisionesRight();
+               detectorColisiones.BorderCollisionsRight(player, colisiones, mundo);
+               detectorColisiones.BorderCollisionsLeft(player, colisiones, mundo);              
+               
            }
        
        });
