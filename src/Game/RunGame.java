@@ -29,7 +29,7 @@ public class RunGame extends JPanel{
         this.setBounds(0, 0, 600, 600);
         
         ImageIcon img = new ImageIcon("Resources/TIE.png"); // Enemigo BETA 
-        enemigo = new TIE(0,50,6,img); // Enemigo BETA 
+        enemigo = new TIE(200, 0, 5,img); // Enemigo BETA 
         
         mundo = new World();
         player = new Player();
@@ -37,7 +37,7 @@ public class RunGame extends JPanel{
         detectorColisiones = new DetectorDeColisiones();
        
         player.eventos(this);
-        mundo.eventos(this);
+        colisiones.eventos(this);
         
         this.setFocusable(true);
         this.add(player.getPlayer());
@@ -50,13 +50,10 @@ public class RunGame extends JPanel{
         this.add(mundo.getWorld_1());
         this.add(mundo.getWorld_2());
         
-        run();
+        //run();
     }
     
-    
-    public World getMundo() {
-        return mundo;
-    }  
+     
     
     public Enemy getEnemy(){ // Enemigo BETA 
         return enemigo;
@@ -68,13 +65,17 @@ public class RunGame extends JPanel{
            @Override
            public void actionPerformed(ActionEvent e) {
                
-               getMundo().moveWorld();
-               colisiones.moverColisionesLeft();
-               colisiones.moverColisionesRight();
-               getEnemy().desplazarse();
-               detectorColisiones.BorderCollisionsRight(player, colisiones, mundo);
-               detectorColisiones.BorderCollisionsLeft(player, colisiones, mundo);              
+               mundo.moveWorld();
+               colisiones.moverColisiones();
                
+               getEnemy().desplazarse();
+               
+               detectorColisiones.BorderCollisionsRight(player, colisiones, mundo); 
+               detectorColisiones.BorderCollisionsLeft(player, colisiones, mundo);  
+                                        
+               detectorColisiones.BorderCollisionsEnemyRight(enemigo, colisiones, 55);
+               detectorColisiones.BorderCollisionsEnemyLeft(enemigo, colisiones, 55);
+
            }
        
        });
@@ -83,15 +84,4 @@ public class RunGame extends JPanel{
     }
 }
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-/**
- *
- * 
- */
 

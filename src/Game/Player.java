@@ -36,7 +36,7 @@ public class Player {
         
         player.setBounds(245, 420, ANCHO, ALTO);       
         //Para Probar colisiones    
-        player.setBorder(new LineBorder(Color.RED));
+        //player.setBorder(new LineBorder(Color.RED));
     }
     
     /** Eventos del teclado para el Jugador

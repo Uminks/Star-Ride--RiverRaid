@@ -17,7 +17,7 @@ import javax.swing.Timer;
  * @author LuisF
  */
 public class TIE extends Enemy {
-
+  
     public TIE(int InitY, int InitX, int Velocidad, ImageIcon icon) {
         super(InitY, InitX, Velocidad, icon);
     }
@@ -36,12 +36,6 @@ public class TIE extends Enemy {
      * un desplazamiento hacia abajo
      */
     public void desplazarse() {
-        
-        if( super.getEnemy().getX() > 500 ){
-            super.setVelocidad(super.getVelocidad()*(-1));
-        }else if( super.getEnemy().getX() < 50 ){
-            super.setVelocidad(super.getVelocidad()*(-1));
-        }
         
         super.getEnemy().setLocation( super.getEnemy().getX()+ super.getVelocidad(), super.getEnemy().getY());
        

@@ -30,13 +30,13 @@ public abstract class Enemy {
          * @param Velocidad Velocidad de desplazamiento en Pixeles
          * @param image Imagen del Enemigo
          */
-    public Enemy(int InitY, int InitX, int Velocidad, ImageIcon image) {
+    public Enemy(int InitX, int InitY, int Velocidad, ImageIcon image) {
         this.InitY = InitY;
         this.InitX = InitX;
         this.Velocidad = Velocidad;
         this.image = image;
         enemy = new JLabel();
-        enemy.setBounds(InitX, InitY, 50, 50);
+        enemy.setBounds(InitX, InitY, 55, 55);
         icon = new ImageIcon(image.getImage().getScaledInstance(enemy.getWidth(), enemy.getHeight(), Image.SCALE_SMOOTH));
         enemy.setIcon(icon);
     }

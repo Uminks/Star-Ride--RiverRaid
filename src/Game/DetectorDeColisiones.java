@@ -11,7 +11,7 @@ package Game;
  */
 public class DetectorDeColisiones {
     
-    /** Detecta colisiones de extremos básicas
+    /** Detecta colisiones de extremos básicos por la Izquierda
     * @param player Es la referencia a la nave del jugador
     * @param colisiones Es la referencia a todas las colisiones espaciales
     * @param world Es la referencia al mundo (Puede no ser necesaria)
@@ -19,222 +19,117 @@ public class DetectorDeColisiones {
     public void BorderCollisionsLeft(Player player, CollisionsWorld colisiones, World world){
         
 
-        /** Colision Por la Izquierda del Límite**/
-        if(player.getPlayer().getX() == (colisiones.getConjuntoCollisionsLeft(0).getX()+45)){
+        for (int i = 0; i < colisiones.getConjuntoCollisionsLeft().length; i++) {
+                     
+            if(player.getPlayer().getX() <= colisiones.getConjuntoCollisionsLeft(i).getX()+colisiones.getConjuntoCollisionsLeft(i).getWidth()
+                && player.getPlayer().getY() <= colisiones.getConjuntoCollisionsLeft(i).getY()+colisiones.getConjuntoCollisionsLeft(i).getHeight()
+                    && player.getPlayer().getY()+player.getPlayer().getHeight() >= colisiones.getConjuntoCollisionsLeft(i).getY()){
+                
+                player.setMover_Left(0);
+                colisiones.setSPEED(0);
+                world.setSPEED(0);
+                break;
+            }
             
-           //Reinicio el Jugador
-            //player.initComponentsPlayer();
-            player.setMover_Left(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
+            else if(player.getPlayer().getX() <= colisiones.getConjuntoCollisionsLeft(i).getX()+colisiones.getConjuntoCollisionsLeft(i).getWidth()
+                    && player.getPlayer().getY() == colisiones.getConjuntoCollisionsLeft(i).getY()+colisiones.getConjuntoCollisionsRight(i).getHeight()){
+                
+                player.setMover_Left(0);
+                colisiones.setSPEED(0);
+                world.setSPEED(0);
+                break;
+            }
             
-        } 
-        
-        
-        
-        /*********************************************************************************/
-        /***********************     VERIFICANDO 1 OBSTACULO    *************************/
-        /********************************************************************************/
-        /** verifico su colisión en X*/
-        else if(((player.getPlayer().getY()) == colisiones.getConjuntoCollisionsLeft(1).getY()+500) &&
-                (player.getPlayer().getX()) < colisiones.getConjuntoCollisionsLeft(1).getX()+90){
-            
-            //Reinicio el Jugador
-            //player.initComponentsPlayer();
-            player.setMover_Left(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
-            
+            else{
+                //Si no hay colision continúo con la ejecución normal
+                player.setMover_Left(10);
+                colisiones.setSPEED(5);
+                world.setSPEED(2);
+            }        
         }
-        /** verifico su colición en Y*/
-        else if((player.getPlayer().getX() == (colisiones.getConjuntoCollisionsLeft(1).getX()+90)) &&
-                ((player.getPlayer().getY()+130) > colisiones.getConjuntoCollisionsLeft(1).getY()) &&
-                ((player.getPlayer().getY()) < colisiones.getConjuntoCollisionsLeft(1).getY()+500)){
-               
-            //Reinicio el Jugador
-            //player.initComponentsPlayer();
-            player.setMover_Left(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
-        } 
-        
-        
-        
-        
-        /*********************************************************************************/
-        /***********************     VERIFICANDO 2 OBSTACULO    *************************/
-        /********************************************************************************/
-        /** verifico su colición en X*/
-        else if(((player.getPlayer().getY()) == colisiones.getConjuntoCollisionsLeft(2).getY()+400) &&
-                (player.getPlayer().getX()) <= colisiones.getConjuntoCollisionsLeft(2).getX()+90){
-            
-            //Reinicio el Jugador
-            //player.initComponentsPlayer();
-            player.setMover_Left(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
-            
-        }
-        /** verifico su colición en Y*/
-        else if((player.getPlayer().getX() == (colisiones.getConjuntoCollisionsLeft(2).getX()+90)) &&
-                ((player.getPlayer().getY()+130) > colisiones.getConjuntoCollisionsLeft(2).getY()) &&
-                ((player.getPlayer().getY()) < colisiones.getConjuntoCollisionsLeft(2).getY()+400)){
-               
-           //Reinicio el Jugador
-            //player.initComponentsPlayer();
-            player.setMover_Left(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
-        } 
-        
-        
-        
-        
-         /*********************************************************************************/
-        /***********************     VERIFICANDO 3 OBSTACULO    *************************/
-        /********************************************************************************/
-        /** verifico su colición en X*/
-        else if(((player.getPlayer().getY()) == colisiones.getConjuntoCollisionsLeft(3).getY()+600) &&
-                (player.getPlayer().getX()) < colisiones.getConjuntoCollisionsLeft(3).getX()+90){
-            
-            //Reinicio el Jugador
-            //player.initComponentsPlayer();
-            player.setMover_Left(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
-            
-        }
-        /** verifico su colición en Y*/
-        else if((player.getPlayer().getX() == (colisiones.getConjuntoCollisionsLeft(3).getX()+90)) &&
-                ((player.getPlayer().getY()+130) > colisiones.getConjuntoCollisionsLeft(3).getY()) &&
-                ((player.getPlayer().getY()) < colisiones.getConjuntoCollisionsLeft(3).getY()+600)){
-               
-           //Reinicio el Jugador
-            //player.initComponentsPlayer();
-            player.setMover_Left(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
-        } 
-        
-        /*********************************************************************************/
-        /***************************     NO HAY COLISION    *****************************/
-        /********************************************************************************/
-        else{
-            //Si no hay colision continúo con la ejecución normal
-            player.setMover_Left(10);
-            colisiones.setSPEED(5);
-            world.setSPEED(2);
-        }
-        
+                       
     }
     
-    /** Detecta colisiones de extremos básicas
+    /** Detecta colisiones de extremos básicos por la Derecha
     * @param player Es la referencia a la nave del jugador
     * @param colisiones Es la referencia a todas las colisiones espaciales
     * @param world Es la referencia al mundo (Puede no ser necesaria)
     */
     public void BorderCollisionsRight(Player player, CollisionsWorld colisiones, World world){
         
-        
-        /** Colision Por la Derecha **/
-        if((player.getPlayer().getX()+110) == (colisiones.getConjuntoCollisionsRight(0).getX())){
-            player.setMover_Right(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
+        for (int i = 0; i < colisiones.getConjuntoCollisionsRight().length; i++) {
+            
+            if(player.getPlayer().getX()+player.getPlayer().getWidth() >= colisiones.getConjuntoCollisionsRight(i).getX()
+                    && player.getPlayer().getY() <= colisiones.getConjuntoCollisionsRight(i).getY()+colisiones.getConjuntoCollisionsRight(i).getHeight()
+                    && player.getPlayer().getY()+player.getPlayer().getHeight()>= colisiones.getConjuntoCollisionsRight(i).getY()){
+                
+                player.setMover_Right(0);
+                colisiones.setSPEED(0);
+                world.setSPEED(0);
+                break;
+            }
+            
+            
+            else if(player.getPlayer().getX()+player.getPlayer().getWidth() >= colisiones.getConjuntoCollisionsRight(i).getX()
+                    && player.getPlayer().getY() == colisiones.getConjuntoCollisionsRight(i).getY()+colisiones.getConjuntoCollisionsRight(i).getHeight()){
+                
+                player.setMover_Right(0);
+                colisiones.setSPEED(0);
+                world.setSPEED(0);
+                break;
+            }
+            
+             else{
+                 //Si no hay colision continúo con la ejecución normal
+                player.setMover_Right(10);
+                colisiones.setSPEED(5);
+                world.setSPEED(2);
+            }
+ 
         }
 
-        /*********************************************************************************/
-        /***********************     VERIFICANDO 1 OBSTACULO    *************************/
-        /********************************************************************************/
-        /** verifico su colisión en X*/
-        else if(((player.getPlayer().getY()) == colisiones.getConjuntoCollisionsRight(1).getY()+500) &&
-                (player.getPlayer().getX()+110) > colisiones.getConjuntoCollisionsRight(1).getX()){
-            
-            //Reinicio el Jugador
-            //player.initComponentsPlayer();
-            player.setMover_Right(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
-            
-        }
-        /** verifico su colición en Y*/
-        else if((player.getPlayer().getX()+110 == (colisiones.getConjuntoCollisionsRight(1).getX())) &&
-                ((player.getPlayer().getY()+130) > colisiones.getConjuntoCollisionsRight(1).getY()) &&
-                ((player.getPlayer().getY()) < colisiones.getConjuntoCollisionsRight(1).getY()+500)){
-               
-            //Reinicio el Jugador
-            //player.initComponentsPlayer();
-            player.setMover_Right(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
-        } 
-        
-        
-        
-        
-        /*********************************************************************************/
-        /***********************     VERIFICANDO 2 OBSTACULO    *************************/
-        /********************************************************************************/
-        /** verifico su colición en X*/
-        else if(((player.getPlayer().getY()) == colisiones.getConjuntoCollisionsRight(2).getY()+400) &&
-                (player.getPlayer().getX()+110) > colisiones.getConjuntoCollisionsRight(2).getX()){
-            
-            //Reinicio el Jugador
-            //player.initComponentsPlayer();
-            player.setMover_Right(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
-            
-        }
-        /** verifico su colición en Y*/
-        else if((player.getPlayer().getX()+110 == (colisiones.getConjuntoCollisionsRight(2).getX())) &&
-                ((player.getPlayer().getY()+130) > colisiones.getConjuntoCollisionsRight(2).getY()) &&
-                ((player.getPlayer().getY()) < colisiones.getConjuntoCollisionsRight(2).getY()+400)){
-               
-           //Reinicio el Jugador
-            //player.initComponentsPlayer();
-            player.setMover_Right(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
-        }
-      
-         /*********************************************************************************/
-        /***********************     VERIFICANDO 3 OBSTACULO    *************************/
-        /********************************************************************************/
-        /** verifico su colición en X*/
-        else if(((player.getPlayer().getY()) == colisiones.getConjuntoCollisionsRight(3).getY()+600) &&
-                (player.getPlayer().getX()+110) > colisiones.getConjuntoCollisionsRight(3).getX()){
-            
-            //Reinicio el Jugador
-            //player.initComponentsPlayer();
-            player.setMover_Right(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
-        }
-        /** verifico su colición en Y*/
-        else if((player.getPlayer().getX()+110 == (colisiones.getConjuntoCollisionsRight(3).getX())) &&
-                ((player.getPlayer().getY()+130) > colisiones.getConjuntoCollisionsRight(3).getY()) &&
-                ((player.getPlayer().getY()) < colisiones.getConjuntoCollisionsRight(3).getY()+600)){
-               
-           //Reinicio el Jugador
-            //player.initComponentsPlayer();
-            player.setMover_Right(0);
-            colisiones.setSPEED(0);
-            world.setSPEED(0);
-        } 
-        
-        /*********************************************************************************/
-        /***************************     NO HAY COLISION    *****************************/
-        /********************************************************************************/
-        else{
-            //Si no hay colision continúo con la ejecución normal
-            player.setMover_Right(10);
-            colisiones.setSPEED(5);
-            world.setSPEED(2);
-        }
         
     }
    
+    /** Detecta colisiones Con el enemigo
+    * @param enemy Es la referencia al enemigo
+    * @param colisiones Es la referencia a todas las colisiones espaciales
+    * @param PIXELES Es el tamaño del label del enemigo
+    */
+    public void BorderCollisionsEnemyRight(Enemy enemy, CollisionsWorld colisiones, int PIXELES){
+
+        for (int i = 0; i < colisiones.getConjuntoCollisionsRight().length; i++) {
+            
+            if(enemy.getEnemy().getX()+enemy.getEnemy().getWidth() >= colisiones.getConjuntoCollisionsRight(i).getX()
+                    && enemy.getEnemy().getY() <= colisiones.getConjuntoCollisionsRight(i).getY()+colisiones.getConjuntoCollisionsRight(i).getHeight()
+                    && enemy.getEnemy().getY()+PIXELES >= colisiones.getConjuntoCollisionsRight(i).getY()){
+                
+                enemy.setVelocidad(enemy.getVelocidad()*(-1));
+                enemy.getEnemy().setLocation(enemy.getEnemy().getX()+ enemy.getVelocidad(), enemy.getEnemy().getY()); 
+                break;
+            } 
+        }     
+    }
+    
+    /** Detecta colisiones con el enemigo
+    * @param enemy Es la referencia al enemigo
+    * @param colisiones Es la referencia a todas las colisiones espaciales
+    * @param PIXELES Es el tamaño del label del enemigo
+    */
+    public void BorderCollisionsEnemyLeft(Enemy enemy, CollisionsWorld colisiones, int PIXELES){
+        
+        for (int i = 0; i < colisiones.getConjuntoCollisionsLeft().length; i++) {
+                     
+            if(enemy.getEnemy().getX() <= colisiones.getConjuntoCollisionsLeft(i).getX()+colisiones.getConjuntoCollisionsLeft(i).getWidth()
+                && enemy.getEnemy().getY() <= colisiones.getConjuntoCollisionsLeft(i).getY()+colisiones.getConjuntoCollisionsLeft(i).getHeight()
+                    && enemy.getEnemy().getY()+PIXELES >= colisiones.getConjuntoCollisionsLeft(i).getY()){
+                
+                enemy.setVelocidad(enemy.getVelocidad()*(-1));
+               enemy.getEnemy().setLocation(enemy.getEnemy().getX()+ enemy.getVelocidad(), enemy.getEnemy().getY()); 
+                break;
+            }               
+        }               
+    }
 }
 
 

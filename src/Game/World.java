@@ -75,34 +75,7 @@ public class World {
         
     }
     
-    /** Eventos del teclado para el mundo
-     * @param game Panel del juego al que aplican los eventos de teclado
-     */
-    public void eventos(JPanel game){
-        game.addKeyListener(new KeyListener(){
-            @Override
-            public void keyTyped(KeyEvent e) {}
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                
-                if(e.getKeyCode() == KeyEvent.VK_UP && SPEED >0){                      
-                    SPEED = 4;                     
-                }                            
-                
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                
-                if(e.getKeyCode() == KeyEvent.VK_UP){               
-                    SPEED = 2;
-                }
-                    
-                
-            }
-        });
-    }
+    
     /**********************************************************/
     /************************ GETTERS *************************/
     /**********************************************************/

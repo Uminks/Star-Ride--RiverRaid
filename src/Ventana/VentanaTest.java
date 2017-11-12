@@ -6,6 +6,11 @@
 package Ventana;
 
 import Game.RunGame;
+import Graficos.Menu;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 
 
@@ -16,20 +21,28 @@ import javax.swing.JFrame;
 
 public class VentanaTest extends JFrame{
     
+    private Menu menu;
+    private RunGame game;
+    
     public VentanaTest(){
         
-        this.setBounds(0, 0, 800, 600);
-        this.setTitle("Star Raid");
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
+        super.setBounds(0, 0, 800, 600);
+        super.setTitle("Star Raid");
+        super.setResizable(false);
+        super.setLocationRelativeTo(null);
         
-        //this.add(new Menu());
-        this.add(new RunGame());
-        
+        //menu = new Menu();
+        game = new RunGame();
+        game.run();
+         
+        super.add(game);
+        //super.add(menu);
+         
+        System.out.println(game.isFocusable());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
- 
+    
     public static void main(String[] args) {
        
         VentanaTest test = new VentanaTest();
