@@ -18,8 +18,8 @@ import javax.swing.Timer;
  */
 public class TIE extends Enemy {
   
-    public TIE(int InitY, int InitX, int Velocidad, ImageIcon icon) {
-        super(InitY, InitX, Velocidad, icon);
+    public TIE(int InitX, int InitY, int Velocidad) {
+        super(InitX, InitY, Velocidad, new ImageIcon("Resources/TIE.png"));
     }
     
     public int getX(){
