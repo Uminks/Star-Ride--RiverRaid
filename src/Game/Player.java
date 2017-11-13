@@ -14,8 +14,8 @@ import javax.swing.border.LineBorder;
 public class Player {
     
     //CONSTANTES
-    private final int ANCHO = 110;
-    private final int ALTO = 130;
+    private final int ANCHO = 80;
+    private final int ALTO = 100;
     private int Mover_Left = 10;
     private int Mover_Right = 10;
     private JLabel player;

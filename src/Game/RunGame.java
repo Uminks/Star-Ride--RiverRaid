@@ -84,7 +84,7 @@ public class RunGame extends JPanel{
         addRandomEnemy = new Timer( RandomTime()*1000 , new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                enemyList.add(new TIE(200,0,5));
+                enemyList.add(new TIE(200,-60,5));
                 addEnemy();
             }
             
@@ -97,9 +97,9 @@ public class RunGame extends JPanel{
      * Este metodo agrega enemigos de Tipo JLabel al panel para ser mostrados.
      */
     public void addEnemy(){
-        
+
         for( Enemy enemigos: enemyList){
-            this.add(enemigos.getEnemy(),0);
+            super.add(enemigos.getEnemy(),0);
         }
         
     }
