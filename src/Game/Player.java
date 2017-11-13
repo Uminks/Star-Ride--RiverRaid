@@ -18,7 +18,6 @@ public class Player {
     private final int ALTO = 130;
     private int Mover_Left = 10;
     private int Mover_Right = 10;
-    
     private JLabel player;
     
     public Player(){
@@ -42,11 +41,12 @@ public class Player {
     /** Eventos del teclado para el Jugador
      * @param game Panel del juego al que aplican los eventos de teclado
      */
-    public void eventos(JPanel game){
+    public void eventos(final JPanel game){
         game.addKeyListener(new KeyListener(){
             @Override
             public void keyTyped(KeyEvent e) {}
 
+            //MOVIMIENTO
             @Override
             public void keyPressed(KeyEvent e) {
                               
@@ -58,23 +58,23 @@ public class Player {
                 }
             
             }
-
+            
             @Override
             public void keyReleased(KeyEvent e) {}
         });
     }
- 
+   
     /**********************************************************/
     /************************ GETTERS *************************/
     /**********************************************************/
 
     /** Retorna player
-     * @return player juagaror del juego y todos sus componentes
+     * @return player jugador del juego y todos sus componentes
      */
     public JLabel getPlayer() {
         return player;
     }
-    
+
     /**
      * 
      * @param Mover_Left Es el indicador por izquierda del movimiento que viene de la colision

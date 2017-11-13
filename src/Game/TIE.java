@@ -37,7 +37,7 @@ public class TIE extends Enemy {
      */
     public void desplazarse() {
         
-        super.getEnemy().setLocation( super.getEnemy().getX()+ super.getVelocidad(), super.getEnemy().getY());
+        super.getEnemy().setLocation( super.getEnemy().getX()+ super.getVelocidad(), super.getEnemy().getY()+2);
        
         
     }

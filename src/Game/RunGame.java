@@ -7,6 +7,8 @@ package Game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
@@ -21,7 +23,8 @@ public class RunGame extends JPanel{
     
     private World mundo;
     private Player player;
-    private ArrayList<Enemy> list;
+    private ArrayList<Shoot> shootList;
+    private ArrayList<Enemy> enemyList;
     private Timer addRandomEnemy, changeDelay;
     private CollisionsWorld colisiones;
     private DetectorDeColisiones detectorColisiones;
@@ -61,17 +64,7 @@ public class RunGame extends JPanel{
         
         //run();
     }
-    
-    /**
-     * Este metodo agrega enemigos de Tipo JLabel al panel para ser mostrados.
-     */
-    public void addEnemy(){
-        
-        for( Enemy enemigos: list){
-            this.add(enemigos.getEnemy(),0);
-        }
-        
-    }
+   
     
     
     /**
@@ -83,14 +76,15 @@ public class RunGame extends JPanel{
         this.setBounds(0, 0, 600, 600);
         mundo = new World();
         player = new Player();
-        list = new ArrayList<Enemy>();
+        enemyList = new ArrayList<Enemy>();
+        shootList = new ArrayList<Shoot>();
         colisiones = new CollisionsWorld();
         detectorColisiones = new DetectorDeColisiones();
         
         addRandomEnemy = new Timer( RandomTime()*1000 , new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                list.add(new TIE(200,0,5));
+                enemyList.add(new TIE(200,0,5));
                 addEnemy();
             }
             
@@ -99,10 +93,27 @@ public class RunGame extends JPanel{
 
     } 
     
+     /**
+     * Este metodo agrega enemigos de Tipo JLabel al panel para ser mostrados.
+     */
+    public void addEnemy(){
+        
+        for( Enemy enemigos: enemyList){
+            this.add(enemigos.getEnemy(),0);
+        }
+        
+    }
     
+    /**
+     * Este metodo agrega disparos de Tipo JLabel al panel para ser mostrados.
+     */
+    public void addShoot(){      
+        for(Shoot balas: shootList){
+           this.add(balas.getShoot(),0);           
+        }
+    }
     
-    
-    
+       
     /**
      * Este metodo retorna un numero aleatorio que representa el tiempo de espera en segundos.
      * @return retorna un tiempo en segundos aleatoriamente de tipo Integer. 
@@ -115,7 +126,9 @@ public class RunGame extends JPanel{
         
     }
     
-    
+    /**
+     * Ejecuta todas la funciones de ejecuciones del juego
+     */
     public void run(){
         
         Timer timer = new Timer(18, new ActionListener(){
@@ -128,7 +141,7 @@ public class RunGame extends JPanel{
                /**
                 * Desplazar todos los enemigos.
                 */
-               for( Enemy enemigos : list){
+               for( Enemy enemigos : enemyList){
                    enemigos.desplazarse();
                }
                
@@ -138,12 +151,26 @@ public class RunGame extends JPanel{
                /**
                 * Validar colisiones de todos los enemigos.
                 */
-               for( Enemy enemigos : list){
+               for( Enemy enemigos : enemyList){
                     detectorColisiones.BorderCollisionsEnemyRight(enemigos, colisiones, 55);
                     detectorColisiones.BorderCollisionsEnemyLeft(enemigos, colisiones, 55);
+                    //Colisiones enemigos y balas
+                    for(Shoot balas: shootList){
+                        if(enemigos.getEnemy().getY()+enemigos.getEnemy().getHeight() > balas.getShoot().getY()
+                                && enemigos.getEnemy().getY() < balas.getShoot().getY()
+                                && enemigos.getEnemy().getX() < balas.getShoot().getX()
+                                && enemigos.getEnemy().getX() + enemigos.getEnemy().getWidth() > balas.getShoot().getX()){
+                            
+                            //En beta Eliminar xDDDDDDDD
+                            enemigos.getEnemy().setLocation(0, 6000);
+                            enemigos.getEnemy().setVisible(false);
+                            
+                            balas.getShoot().setLocation(0, 0);
+                            balas.getShoot().setVisible(false);
+                        }           
+                    }
                }
                
-
            }
        
        });
@@ -158,6 +185,29 @@ public class RunGame extends JPanel{
         });*/
        
        timer.start();
+       
+       
+       /**
+        * ESCUCHADORA ENCARGADA DE GENERAR DISPAROS
+        */
+       super.addKeyListener(new KeyListener(){
+            @Override
+            public void keyTyped(KeyEvent e) {
+                }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_SPACE){
+                    shootList.add(new Shoot(player.getPlayer().getX()+(player.getPlayer().getWidth()/2)-2));
+                    addShoot();                  
+                }
+            }
+       });
+       
     }
 }
 

@@ -38,7 +38,6 @@ public class VentanaTest extends JFrame{
         super.add(game);
         //super.add(menu);
          
-        System.out.println(game.isFocusable());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
