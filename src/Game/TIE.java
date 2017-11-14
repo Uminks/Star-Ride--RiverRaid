@@ -17,24 +17,22 @@ import javax.swing.Timer;
  * @author LuisF
  */
 public class TIE extends Enemy {
-  
-    public TIE(int InitX, int InitY, int Velocidad) {
-        super(InitX, InitY, Velocidad, new ImageIcon("Resources/TIE.png"));
-    }
     
-    public int getX(){
-        return super.getInitX();
+    /**
+     * Constructor de la Clase TIE
+     * @param InitX Posicion Inicial X
+     * @param InitY Posicion Inicial Y
+     */
+    public TIE(int InitX, int InitY) {
+        super(InitX, InitY, 5, new ImageIcon("Resources/TIE.png"));
     }
-    
-    public int getY(){
-        return super.getInitY();
-    }
-   
-    @Override
+        
     /**
      * Este metodo proporciona el movimiento del enemigo, colocando limites de izquierda a derecha y proporcionando
      * un desplazamiento hacia abajo
+     * @Override
      */
+    @Override
     public void desplazarse() {
         
         super.getEnemy().setLocation( super.getEnemy().getX()+ super.getVelocidad(), super.getEnemy().getY()+2);

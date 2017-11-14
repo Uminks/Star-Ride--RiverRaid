@@ -24,7 +24,7 @@ public class Shoot {
         
         shoot = new JLabel();
         shoot.setBounds(x, 400, ANCHO, ALTO); 
-        ImageIcon ima = new ImageIcon("Resources/player/shoot.png");
+        ImageIcon ima = new ImageIcon("Resources/player/LaserVerde.png");
         Icon image = new ImageIcon(ima.getImage().getScaledInstance(shoot.getWidth(), shoot.getHeight(), Image.SCALE_SMOOTH));
     
         shoot.setIcon(image); 

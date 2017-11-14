@@ -84,7 +84,33 @@ public class RunGame extends JPanel{
         addRandomEnemy = new Timer( RandomTime()*1000 , new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                enemyList.add(new TIE(200,-60,5));
+                
+                int Type = RandomEnemy();
+                int Position = RandomEnemy();
+                
+                if(Type == 2){
+                    
+                    if( Position == 1){
+                       enemyList.add(new Asteroid(200,-60)); 
+                    }else if( Position == 2){
+                        enemyList.add(new Asteroid(300,-60)); 
+                    }else{
+                        enemyList.add(new Asteroid(400,-60)); 
+                    }
+      
+                }else if ( Type == 1 || Type == 3){
+                    
+                    
+                     if( Position == 1){
+                       enemyList.add(new  TIE(200,-60)); 
+                    }else if ( Position == 2 ){
+                        enemyList.add(new TIE(300,-60)); 
+                    }else{
+                        enemyList.add(new TIE(400,-60));
+                    }
+                     
+                }
+                
                 addEnemy();
             }
             
@@ -120,10 +146,21 @@ public class RunGame extends JPanel{
      */
     public int RandomTime(){
         
-        int max = 8; int min = 2;
+        int max = 6; int min = 2;
         
         return min + (int)(Math.random() * ((max - min) + 1));
         
+    }
+    
+    
+    /**
+     * Este metodo retorna un numero aleatorio que tiene un significado para la logica de los villanos.
+     * @return 
+     */
+    public int RandomEnemy(){
+        int max = 3; int min = 1;
+        
+        return min + (int)(Math.random() * ((max - min) + 1));
     }
     
     /**
