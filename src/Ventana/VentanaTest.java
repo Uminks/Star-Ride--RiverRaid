@@ -38,12 +38,12 @@ public class VentanaTest extends JFrame{
         menu = new Menu();
         menu.setVisible(true);
         
-        game = new RunGame();
+
+        panelScore = new PanelScore();
+        
+        game = new RunGame(panelScore); 
         game.setFocusable(true);
         
-        panelScore = new PanelScore();
-         
-   
         super.add(panelScore);
         super.add(game);
         super.add(menu, 0);
@@ -54,8 +54,8 @@ public class VentanaTest extends JFrame{
                 
                 menu.setVisible(false);              
                 game.run();
-                
-                
+                game.getPanelScore().start();
+                         
             }
             
         });

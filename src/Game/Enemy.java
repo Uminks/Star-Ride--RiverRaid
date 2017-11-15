@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 
 /**
  * Clase abstracta de enemigos
- * @author LuisF
+ * 
  */
 public abstract class Enemy {
     

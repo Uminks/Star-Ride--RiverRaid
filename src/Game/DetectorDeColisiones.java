@@ -131,6 +131,23 @@ public class DetectorDeColisiones {
         }               
     }
     
+    /** Detecta clisiones Fuel y player
+     * @param player Es la referencia al jugador
+     * @param fuel Es la referencia a la caja de combustible
+     */
+    public boolean collisionFuel(Player player, Fuel fuel){
+        
+        if(player.getPlayer().getX() <= fuel.getFuel().getX()+fuel.getFuel().getWidth()
+                &&player.getPlayer().getX() + player.getPlayer().getWidth() >= fuel.getFuel().getX()
+                    && player.getPlayer().getY() <= fuel.getFuel().getY()+fuel.getFuel().getHeight()
+                        && player.getPlayer().getY()+player.getPlayer().getWidth()>= fuel.getFuel().getY()){
+            
+            return true;
+            
+        }
+       
+        return false;
+    }
     
 }
 

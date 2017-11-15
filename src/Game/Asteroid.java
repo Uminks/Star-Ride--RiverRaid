@@ -14,7 +14,7 @@ import javax.swing.Timer;
 
 /**
  * Clase Asteroide hereda de Enemy.
- * @author LuisF
+ * 
  */
 public class Asteroid extends Enemy{
     

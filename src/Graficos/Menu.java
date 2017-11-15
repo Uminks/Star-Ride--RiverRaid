@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 
 /**
  * Esta clase contiene todos los elementos del Menu y componen propiamente el mismo.
- * @author LuisF
+ * 
  */
 public class Menu extends JPanel {
     

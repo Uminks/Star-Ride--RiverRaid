@@ -25,13 +25,17 @@ public class RunGame extends JPanel{
     private Player player;
     private ArrayList<Shoot> shootList;
     private ArrayList<Enemy> enemyList;
-    private Timer addRandomEnemy, changeDelay;
+    private ArrayList<Fuel> fuelList;
+    private Timer addRandomEnemy, addRandomFuel;
     private CollisionsWorld colisiones;
     private DetectorDeColisiones detectorColisiones;
+    private Timer timerGame;
     
-    public RunGame(){
+    private PanelScore panelScore;
+    
+    public RunGame(PanelScore panelScore){
         
-        
+        this.panelScore = panelScore;
         this.initComponents();
         
         
@@ -41,6 +45,15 @@ public class RunGame extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 addRandomEnemy.setDelay(RandomTime()*1000);
+            }
+        
+        });
+        
+        this.addRandomFuel.start();
+        addRandomFuel.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addRandomFuel.setDelay((RandomTime()+2)*1000);
             }
         
         });
@@ -78,6 +91,7 @@ public class RunGame extends JPanel{
         player = new Player();
         enemyList = new ArrayList<Enemy>();
         shootList = new ArrayList<Shoot>();
+        fuelList = new ArrayList<Fuel>();
         colisiones = new CollisionsWorld();
         detectorColisiones = new DetectorDeColisiones();
         
@@ -87,7 +101,6 @@ public class RunGame extends JPanel{
                 
                 int Type = RandomEnemy();
                 int Position = RandomEnemy();
-                
                 if(Type == 2){
                     
                     if( Position == 1){
@@ -101,13 +114,14 @@ public class RunGame extends JPanel{
                 }else if ( Type == 1 || Type == 3){
                     
                     
-                     if( Position == 1){
+                    if( Position == 1){
                        enemyList.add(new  TIE(200,-60)); 
                     }else if ( Position == 2 ){
                         enemyList.add(new TIE(300,-60)); 
                     }else{
                         enemyList.add(new TIE(400,-60));
                     }
+                    
                      
                 }
                 
@@ -116,8 +130,29 @@ public class RunGame extends JPanel{
             
         });
         
+        addRandomFuel = new Timer((RandomTime()+2)*1000, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                int Position = RandomEnemy();
+                
+                if(Position==1){
+                    fuelList.add(new Fuel(200, -100));
+                }else if(Position==1){
+                    fuelList.add(new Fuel(300, -100));
+                }else{
+                    fuelList.add(new Fuel(400, -100));
+                }
+                    
+                addFuel();
+            }
+        
+        });
+        
+        
 
-    } 
+    }
+    
     
      /**
      * Este metodo agrega enemigos de Tipo JLabel al panel para ser mostrados.
@@ -136,8 +171,17 @@ public class RunGame extends JPanel{
      */
     public void addShoot(){      
         for(Shoot balas: shootList){
-            this.add(balas.getShoot(),0); 
+            super.add(balas.getShoot(),0); 
             
+        }
+    }
+    
+    /**
+     * Este metodo agrega combustibles de Tipo JLabel al panel para ser mostrados.
+     */
+    public void addFuel(){      
+        for(Fuel balas: fuelList){
+            super.add(balas.getFuel(), 0);          
         }
     }
     
@@ -156,13 +200,13 @@ public class RunGame extends JPanel{
     
     
     /**
-     * Este metodo retorna un numero aleatorio que tiene un significado para la logica de los villanos.
-     * @return 
+     * Este metodo retorna un numero aleatorio que tiene un significado para la logica de los villanos y el fuel.
+     * @return random entero para la ubicacion del enemigo y fuel
      */
     public int RandomEnemy(){
-        int max = 3; int min = 1;
+        int max = 3;
         
-        return min + (int)(Math.random() * ((max - min) + 1));
+        return (int)(Math.random() * (max) + 1);
     }
     
     /**
@@ -170,19 +214,25 @@ public class RunGame extends JPanel{
      */
     public void run(){
         
-        Timer timer = new Timer(18, new ActionListener(){
+        timerGame = new Timer(18, new ActionListener(){
            @Override
            public void actionPerformed(ActionEvent e) {
                
+               
                mundo.moveWorld();
                colisiones.moverColisiones();
-               
                /**
                 * Desplazar todos los enemigos.
                 */
                for( Enemy enemigos : enemyList){
                     enemigos.desplazarse(colisiones.getSPEED());
                    
+               }
+               /**
+                * Desplazar Combustible
+                */
+               for( Fuel fuel : fuelList){
+                    fuel.desplazarse(colisiones.getSPEED());               
                }
                
                detectorColisiones.BorderCollisionsRight(player, colisiones, mundo); 
@@ -195,6 +245,7 @@ public class RunGame extends JPanel{
                        
                         detectorColisiones.BorderCollisionsEnemyRight(enemigos, colisiones, 55);
                         detectorColisiones.BorderCollisionsEnemyLeft(enemigos, colisiones, 55);
+                        
                         //Colisiones enemigos y balas
                         for(Shoot balas: shootList){
 
@@ -205,16 +256,40 @@ public class RunGame extends JPanel{
 
 
                                     enemigos.getEnemy().setVisible(false);
-                                    enemigos.getEnemy().setLocation(0, 6000);
+                                    enemigos.getEnemy().setLocation(-600, 0);
 
                                     balas.getShoot().setVisible(false);
-                                    balas.getShoot().setLocation(0, 0);
+                                    balas.getShoot().setLocation(-100, 0);
                                 } 
                             
 
                         }
                         
                    
+               }
+               
+               /**
+                *  Colisiones player y fuel
+                */
+               for( Fuel fuel : fuelList){
+                   
+                   if(detectorColisiones.collisionFuel(player, fuel)==true){
+                       fuel.getFuel().setLocation(-600, 0);
+                       fuel.getFuel().setVisible(false);
+                       panelScore.getFuel().setValue(100);
+                   }
+               
+               }
+               
+               
+               /**
+                * Validando Combustible = 0 STOP
+                */
+               if(panelScore.getFuel().getValue()<=0){
+                   timerGame.stop();
+                   player.setMover_Left(0);
+                   player.setMover_Right(0);
+                   System.out.println("SIN COMBUSTIBLE");
                }
                
            }
@@ -230,7 +305,7 @@ public class RunGame extends JPanel{
             
         });*/
        
-       timer.start();
+       timerGame.start();
        
        
        /**
@@ -255,6 +330,16 @@ public class RunGame extends JPanel{
        });
        
     }
+
+    /**
+     * 
+     * @return panelScore Panel del registro de score
+     */
+    public PanelScore getPanelScore() {
+        return panelScore;
+    }
+    
+    
 }
 
 
