@@ -23,13 +23,13 @@ public abstract class Enemy {
     private Icon icon;
     private JLabel enemy;
         
-        /**
-         * Constructor de la clase Enemy asigna valores iniciales de su aparición, asigna velocidad y recibe un ImageIcon que posteriormente transformara en Icon.
-         * @param InitY Posicion Inicial Y
-         * @param InitX Posicion Inicial X
-         * @param Velocidad Velocidad de desplazamiento en Pixeles
-         * @param image Imagen del Enemigo
-         */
+    /**
+     * Constructor de la clase Enemy asigna valores iniciales de su aparición, asigna velocidad y recibe un ImageIcon que posteriormente transformara en Icon.
+     * @param InitY Posicion Inicial Y
+     * @param InitX Posicion Inicial X
+     * @param Velocidad Velocidad de desplazamiento en Pixeles
+     * @param image Imagen del Enemigo
+     */
     public Enemy(int InitX, int InitY, int Velocidad, ImageIcon image) {
         this.InitY = InitY;
         this.InitX = InitX;
@@ -67,12 +67,12 @@ public abstract class Enemy {
 
     public void setEnemy(JLabel enemy) {
         this.enemy = enemy;
-    }
+    }  
 
     public void setVelocidad(int Velocidad) {
         this.Velocidad = Velocidad;
     }
     
-    public abstract void desplazarse();
+    public abstract void desplazarse(int SPEED);
     
 }

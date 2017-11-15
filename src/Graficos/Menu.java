@@ -73,26 +73,31 @@ public class Menu extends JPanel {
         this.jugar.setBounds(X, Y, BWidth, BHeight);
         this.jugar.setIcon(AsignButtonDimension(new ImageIcon(PathBase+"Botones-Menu-05"+png),jugar));
         this.jugar.addMouseListener(new MouseEvent());
+        this.jugar.setFocusable(false);
         
         this.instrucciones = new JLabel();
         this.instrucciones.setBounds(X, Y+80, BWidth, BHeight);
         this.instrucciones.setIcon(AsignButtonDimension(new ImageIcon(PathBase+"Botones-Menu-04"+png),instrucciones));
         this.instrucciones.addMouseListener(new MouseEvent());
+        this.instrucciones.setFocusable(false);
         
         this.top10 = new JLabel();
         this.top10.setBounds(X, Y+160, BWidth, BHeight);
         this.top10.setIcon(AsignButtonDimension(new ImageIcon(PathBase+"Botones-Menu-01"+png),top10));
         this.top10.addMouseListener(new MouseEvent());
+        this.top10.setFocusable(false);
         
         this.creditos = new JLabel();
         this.creditos.setBounds(X, Y+240, BWidth, BHeight);
         this.creditos.setIcon(AsignButtonDimension(new ImageIcon(PathBase+"Botones-Menu-02"+png),creditos));
         this.creditos.addMouseListener(new MouseEvent());
+        this.creditos.setFocusable(false);
         
         this.salir = new JLabel();
         this.salir.setBounds(X, Y+320, BWidth, BHeight);
         this.salir.setIcon(AsignButtonDimension(new ImageIcon(PathBase+"Botones-Menu-03"+png),salir));
         this.salir.addMouseListener(new MouseEvent());
+        this.salir.setFocusable(false);
     }
     
     /**

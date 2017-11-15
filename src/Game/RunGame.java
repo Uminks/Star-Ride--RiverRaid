@@ -126,6 +126,7 @@ public class RunGame extends JPanel{
 
         for( Enemy enemigos: enemyList){
             super.add(enemigos.getEnemy(),0);
+
         }
         
     }
@@ -135,7 +136,8 @@ public class RunGame extends JPanel{
      */
     public void addShoot(){      
         for(Shoot balas: shootList){
-           this.add(balas.getShoot(),0);           
+            this.add(balas.getShoot(),0); 
+            
         }
     }
     
@@ -179,7 +181,8 @@ public class RunGame extends JPanel{
                 * Desplazar todos los enemigos.
                 */
                for( Enemy enemigos : enemyList){
-                   enemigos.desplazarse();
+                    enemigos.desplazarse(colisiones.getSPEED());
+                   
                }
                
                detectorColisiones.BorderCollisionsRight(player, colisiones, mundo); 
@@ -189,23 +192,29 @@ public class RunGame extends JPanel{
                 * Validar colisiones de todos los enemigos.
                 */
                for( Enemy enemigos : enemyList){
-                    detectorColisiones.BorderCollisionsEnemyRight(enemigos, colisiones, 55);
-                    detectorColisiones.BorderCollisionsEnemyLeft(enemigos, colisiones, 55);
-                    //Colisiones enemigos y balas
-                    for(Shoot balas: shootList){
-                        if(enemigos.getEnemy().getY()+enemigos.getEnemy().getHeight() > balas.getShoot().getY()
-                                && enemigos.getEnemy().getY() < balas.getShoot().getY()
-                                && enemigos.getEnemy().getX() < balas.getShoot().getX()
-                                && enemigos.getEnemy().getX() + enemigos.getEnemy().getWidth() > balas.getShoot().getX()){
+                       
+                        detectorColisiones.BorderCollisionsEnemyRight(enemigos, colisiones, 55);
+                        detectorColisiones.BorderCollisionsEnemyLeft(enemigos, colisiones, 55);
+                        //Colisiones enemigos y balas
+                        for(Shoot balas: shootList){
+
+                                if(enemigos.getEnemy().getY()+enemigos.getEnemy().getHeight() > balas.getShoot().getY()
+                                        && enemigos.getEnemy().getY() < balas.getShoot().getY()
+                                        && enemigos.getEnemy().getX() < balas.getShoot().getX()
+                                        && enemigos.getEnemy().getX() + enemigos.getEnemy().getWidth() > balas.getShoot().getX()){
+
+
+                                    enemigos.getEnemy().setVisible(false);
+                                    enemigos.getEnemy().setLocation(0, 6000);
+
+                                    balas.getShoot().setVisible(false);
+                                    balas.getShoot().setLocation(0, 0);
+                                } 
                             
-                            //En beta Eliminar xDDDDDDDD
-                            enemigos.getEnemy().setLocation(0, 6000);
-                            enemigos.getEnemy().setVisible(false);
-                            
-                            balas.getShoot().setLocation(0, 0);
-                            balas.getShoot().setVisible(false);
-                        }           
-                    }
+
+                        }
+                        
+                   
                }
                
            }

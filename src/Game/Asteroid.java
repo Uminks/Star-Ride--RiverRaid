@@ -81,8 +81,8 @@ public class Asteroid extends Enemy{
      * @Override
      */
     @Override
-    public void desplazarse() {
-       super.getEnemy().setLocation( super.getEnemy().getX()+ super.getVelocidad(), super.getEnemy().getY()+1);
+    public void desplazarse(int SPEED) {
+       super.getEnemy().setLocation( super.getEnemy().getX()+ super.getVelocidad(), super.getEnemy().getY()+SPEED-2);
     }
     
 }

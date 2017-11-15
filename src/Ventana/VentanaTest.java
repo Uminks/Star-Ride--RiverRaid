@@ -5,6 +5,7 @@
  */
 package Ventana;
 
+import Game.PanelScore;
 import Game.RunGame;
 import Graficos.Menu;
 import java.awt.event.FocusEvent;
@@ -23,6 +24,7 @@ public class VentanaTest extends JFrame{
     
     private Menu menu;
     private RunGame game;
+    private PanelScore panelScore;
     
     public VentanaTest(){
         
@@ -31,16 +33,39 @@ public class VentanaTest extends JFrame{
         super.setResizable(false);
         super.setLocationRelativeTo(null);
         
-        //menu = new Menu();
+        super.setFocusable(false);
+        
+        menu = new Menu();
+        menu.setVisible(true);
+        
         game = new RunGame();
-        game.run();
+        game.setFocusable(true);
+        
+        panelScore = new PanelScore();
          
+   
+        super.add(panelScore);
         super.add(game);
-        //super.add(menu);
+        super.add(menu, 0);
+        
+        menu.getJugar().addMouseListener(new MouseAdapter(){
+            
+            public void mouseClicked(java.awt.event.MouseEvent e){
+                
+                menu.setVisible(false);              
+                game.run();
+                
+                
+            }
+            
+        });
          
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
+    
+    
+    
     
     public static void main(String[] args) {
        

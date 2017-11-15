@@ -137,7 +137,12 @@ public class CollisionsWorld {
      */ 
     public void setSPEED(int SPEED) {
         this.SPEED = SPEED;
-    }    
+    }  
+
+    public int getSPEED() {
+        return SPEED;
+    }
+       
 
     /**
      *
