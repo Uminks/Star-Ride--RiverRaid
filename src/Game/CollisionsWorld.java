@@ -35,9 +35,9 @@ public class CollisionsWorld {
         
          for (int i = 0; i < conjuntoCollisionsLeft.length; i++) {
                     
-            conjuntoCollisionsLeft[i] = new JLabel(new ImageIcon("Resources/world/border.png"));
+            conjuntoCollisionsLeft[i] = new JLabel(new ImageIcon("Resources/world/starblack.png"));
             
-            conjuntoCollisionsRight[i] = new JLabel(new ImageIcon("Resources/world/border.png"));
+            conjuntoCollisionsRight[i] = new JLabel(new ImageIcon("Resources/world/starblack.png"));
          }
         initComponentsCollisions();
     }
