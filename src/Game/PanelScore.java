@@ -27,8 +27,13 @@ public class PanelScore extends JPanel{
     
     public PanelScore(){
         super.setLayout(null);
-        super.setBounds(600, 0, 200, 600);
-        
+        super.setBounds(600, 0, 200, 600);       
+    }
+    
+    /**
+     * Inicia los componentes del panel del Score
+     */
+    public void initComponents(){
         fuel = new JProgressBar(0);
         fuel.setBounds(25, 50, 150, 30);  
         fuel.setValue(100);

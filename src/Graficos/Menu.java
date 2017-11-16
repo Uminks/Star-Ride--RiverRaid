@@ -220,7 +220,9 @@ public class Menu extends JPanel {
     public JLabel getJugar() {
         return jugar;
     }
-    
-    
-    
+
+    public JLabel getInstrucciones() {
+        return instrucciones;
+    }
+      
 }

@@ -31,53 +31,14 @@ public class RunGame extends JPanel{
     private DetectorDeColisiones detectorColisiones;
     private Timer timerGame;
     private int Score;
-    private boolean dejarDisparar;
+    private boolean dejarDisparar, pause;
     
     private PanelScore panelScore;
     
     public RunGame(PanelScore panelScore){
         
         this.panelScore = panelScore;
-        this.initComponents();
-        
-        
-       
-        this.addRandomEnemy.start();
-        addRandomEnemy.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addRandomEnemy.setDelay(RandomTime()*1000);
-            }
-        
-        });
-        
-        this.addRandomFuel.start();
-        addRandomFuel.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addRandomFuel.setDelay((RandomTime()-1)*1000);
-            }
-        
-        });
-        
-        
-        player.eventos(this);
-        colisiones.eventos(this, panelScore);
-        
-        this.setFocusable(true);
-        this.add(player.getPlayer());
-
-        
-        
-        for (int i = 0; i < colisiones.getConjuntoCollisionsLeft().length; i++) {
-            this.add(colisiones.getConjuntoCollisionsLeft(i));
-            this.add(colisiones.getConjuntoCollisionsRight(i));
-        }      
-
-        this.add(mundo.getWorld_1());
-        this.add(mundo.getWorld_2());
-        
-        //run();
+  
     }
    
     
@@ -96,7 +57,9 @@ public class RunGame extends JPanel{
         fuelList = new ArrayList<Fuel>();
         colisiones = new CollisionsWorld();
         detectorColisiones = new DetectorDeColisiones();
-        Score = 0;
+        Score = 0;               
+        dejarDisparar = false;
+        pause = false;
         
         addRandomEnemy = new Timer( RandomTime()*1000 , new ActionListener(){
             @Override
@@ -133,6 +96,17 @@ public class RunGame extends JPanel{
             
         });
         
+        
+        this.addRandomEnemy.start();
+        addRandomEnemy.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addRandomEnemy.setDelay(RandomTime()*1000);
+            }
+        
+        });
+        
+        
         addRandomFuel = new Timer((RandomTime()-1)*1000, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -152,6 +126,31 @@ public class RunGame extends JPanel{
         
         });
         
+
+        this.addRandomFuel.start();
+        addRandomFuel.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addRandomFuel.setDelay((RandomTime()-1)*1000);
+            }
+        
+        });
+        
+     
+        player.eventos(this);
+        colisiones.eventos(this, panelScore);
+        
+        this.setFocusable(true);
+        this.add(player.getPlayer());
+  
+        
+        for (int i = 0; i < colisiones.getConjuntoCollisionsLeft().length; i++) {
+            this.add(colisiones.getConjuntoCollisionsLeft(i));
+            this.add(colisiones.getConjuntoCollisionsRight(i));
+        }      
+
+        this.add(mundo.getWorld_1());
+        this.add(mundo.getWorld_2());
         
 
     }
@@ -225,7 +224,6 @@ public class RunGame extends JPanel{
         timerGame = new Timer(18, new ActionListener(){
            @Override
            public void actionPerformed(ActionEvent e) {
-               dejarDisparar = false;
                
                mundo.moveWorld();
                colisiones.moverColisiones();
@@ -412,9 +410,13 @@ public class RunGame extends JPanel{
 
             @Override
             public void keyReleased(KeyEvent e) {
+                
                 if((e.getKeyCode() == KeyEvent.VK_SPACE) && (dejarDisparar == false)){
                     shootList.add(new Shoot(player.getPlayer().getX()+(player.getPlayer().getWidth()/2)-2));
                     addShoot();                  
+                }
+                if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                    timerGame.stop();
                 }
             }
        });

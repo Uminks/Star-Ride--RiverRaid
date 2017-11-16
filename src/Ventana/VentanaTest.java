@@ -7,6 +7,7 @@ package Ventana;
 
 import Game.PanelScore;
 import Game.RunGame;
+import Graficos.Instrucciones;
 import Graficos.Menu;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -25,6 +26,7 @@ public class VentanaTest extends JFrame{
     private Menu menu;
     private RunGame game;
     private PanelScore panelScore;
+    Instrucciones instrucciones;
     
     public VentanaTest(){
         
@@ -35,35 +37,73 @@ public class VentanaTest extends JFrame{
         
         super.setFocusable(false);
         
+        //MENU
         menu = new Menu();
         menu.setVisible(true);
         
 
-        panelScore = new PanelScore();
-        
+        //GAME
+        panelScore = new PanelScore();       
         game = new RunGame(panelScore); 
         game.setFocusable(true);
         
+        //INSTRUCCIONES
+        instrucciones = new Instrucciones();
+        instrucciones.setVisible(false);
+        
         super.add(panelScore);
         super.add(game);
+        super.add(instrucciones, 0);
         super.add(menu, 0);
+        
+        
+        this.eventos();
+        
+      
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+    }
+    
+    public void eventos(){
         
         menu.getJugar().addMouseListener(new MouseAdapter(){
             
             public void mouseClicked(java.awt.event.MouseEvent e){
                 
-                menu.setVisible(false);              
+                
+                menu.setVisible(false);
+                game.initComponents();
                 game.run();
+                game.getPanelScore().initComponents();
                 game.getPanelScore().start();
                          
             }
             
         });
-         
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+        
+        menu.getInstrucciones().addMouseListener(new MouseAdapter(){
+            
+            public void mouseClicked(java.awt.event.MouseEvent e){
+                
+                menu.setVisible(false);
+                instrucciones.setVisible(true);
+                         
+            }
+            
+        });
+        
+        instrucciones.getVolverMenu().addMouseListener(new MouseAdapter(){
+            
+            public void mouseClicked(java.awt.event.MouseEvent e){
+                
+                menu.setVisible(true);
+                instrucciones.setVisible(false);
+                         
+            }
+            
+        });
+        
     }
-    
     
     
     
