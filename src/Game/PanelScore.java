@@ -7,8 +7,6 @@ package Game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javafx.scene.paint.Color;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -23,6 +21,9 @@ public class PanelScore extends JPanel{
     private JProgressBar fuel;
     private int intScore;
     private JLabel score;
+    private int intLives;
+    private JLabel lives;
+    private Timer timer;
     
     public PanelScore(){
         super.setLayout(null);
@@ -36,9 +37,13 @@ public class PanelScore extends JPanel{
         score = new JLabel(String.valueOf(intScore));
         score.setBounds(98, 110, 100, 10);
         
+        intLives = 3;
+        lives = new JLabel(String.valueOf(intLives));
+        lives.setBounds(99, 130, 10, 10);
         
         super.add(fuel);
         super.add(score);
+        super.add(lives);
     }
     
     /**
@@ -46,7 +51,7 @@ public class PanelScore extends JPanel{
      */
     public void start(){
                 
-        Timer t = new Timer(500, new ActionListener(){
+        timer = new Timer(500, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 
@@ -55,7 +60,7 @@ public class PanelScore extends JPanel{
             }
             
         });
-        t.start();
+        timer.start();
     }
 
     /**
@@ -74,5 +79,31 @@ public class PanelScore extends JPanel{
         this.intScore = intScore;
         score.setText(String.valueOf(this.intScore));
     }
+
+    /**
+     * Registra las vidas del jugador
+     * @param intlives modificador de Vidas
+     */
+    public void setIntLives(int intLives) {
+        this.intLives = intLives;
+        lives.setText(String.valueOf(intLives));
+    }
+
+    /**
+     * Pra administrar las vidas del Player
+     * @return intLives Numero de vidas actuales
+     */
+    public int getIntLives() {
+        return intLives;
+    }
+
+    /**
+     * Metodo que Retorna el Timer en Ejecucion del combustible
+     * @return timer el Timer que produce movimiento de la JProgressBar
+     */
+    public Timer getTimer() {
+        return timer;
+    }
+
  
 }

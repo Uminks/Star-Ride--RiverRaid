@@ -31,6 +31,7 @@ public class RunGame extends JPanel{
     private DetectorDeColisiones detectorColisiones;
     private Timer timerGame;
     private int Score;
+    private boolean dejarDisparar;
     
     private PanelScore panelScore;
     
@@ -224,7 +225,7 @@ public class RunGame extends JPanel{
         timerGame = new Timer(18, new ActionListener(){
            @Override
            public void actionPerformed(ActionEvent e) {
-               
+               dejarDisparar = false;
                
                mundo.moveWorld();
                colisiones.moverColisiones();
@@ -245,8 +246,19 @@ public class RunGame extends JPanel{
                    }                       
                }
                
-               detectorColisiones.BorderCollisionsRight(player, colisiones, mundo); 
-               detectorColisiones.BorderCollisionsLeft(player, colisiones, mundo);  
+               /**
+                * Colisiones del Jugador con los obstáculos
+                */
+               
+               if(detectorColisiones.BorderCollisionsRight(player, colisiones, mundo) == true
+                       || detectorColisiones.BorderCollisionsLeft(player, colisiones, mundo) == true){
+
+                   player.initComponentsPlayer();
+                   //Resto vidas Al Player
+                   panelScore.setIntLives(panelScore.getIntLives()-1);
+                   
+               }
+               
                
                /**
                 * Validar colisiones de todos los enemigos.
@@ -345,16 +357,30 @@ public class RunGame extends JPanel{
                
                }
                
-               
-               /**
-                * Validando Combustible = 0 STOP
-                */
-               if(panelScore.getFuel().getValue()<=0){
-                   timerGame.stop();
-                   player.setMover_Left(0);
-                   player.setMover_Right(0);
-                   System.out.println("SIN COMBUSTIBLE");
-               }
+               /************************************************************/
+               /****************** STOP EN EJECUCIÓN ***********************/
+               /************************************************************/
+                /**
+                 * Validando Combustible = 0 
+                 */
+                if(panelScore.getFuel().getValue()<=0){
+                    timerGame.stop();
+                    player.setMover_Left(0);
+                    player.setMover_Right(0);
+                    System.out.println("SIN COMBUSTIBLE");
+                    dejarDisparar = true;
+                }
+                /**
+                 * Validando Vidas = 0
+                 */
+                if(panelScore.getIntLives()==0){
+                    timerGame.stop();
+                    player.setMover_Left(0);
+                    player.setMover_Right(0);
+                    panelScore.getTimer().stop();
+                    System.out.println("SIN VIDAS");
+                    dejarDisparar = true;
+                }
                
            }
        
@@ -386,7 +412,7 @@ public class RunGame extends JPanel{
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_SPACE){
+                if((e.getKeyCode() == KeyEvent.VK_SPACE) && (dejarDisparar == false)){
                     shootList.add(new Shoot(player.getPlayer().getX()+(player.getPlayer().getWidth()/2)-2));
                     addShoot();                  
                 }

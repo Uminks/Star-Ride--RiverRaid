@@ -16,7 +16,7 @@ public class DetectorDeColisiones {
     * @param colisiones Es la referencia a todas las colisiones espaciales
     * @param world Es la referencia al mundo (Puede no ser necesaria)
     */
-    public void BorderCollisionsLeft(Player player, CollisionsWorld colisiones, World world){
+    public boolean BorderCollisionsLeft(Player player, CollisionsWorld colisiones, World world){
         
 
         for (int i = 0; i < colisiones.getConjuntoCollisionsLeft().length; i++) {
@@ -25,19 +25,13 @@ public class DetectorDeColisiones {
                 && player.getPlayer().getY() <= colisiones.getConjuntoCollisionsLeft(i).getY()+colisiones.getConjuntoCollisionsLeft(i).getHeight()
                     && player.getPlayer().getY()+player.getPlayer().getHeight() >= colisiones.getConjuntoCollisionsLeft(i).getY()){
                 
-                player.setMover_Left(0);
-                colisiones.setSPEED(0);
-                world.setSPEED(0);
-                break;
+                return true;
             }
             
             else if(player.getPlayer().getX() <= colisiones.getConjuntoCollisionsLeft(i).getX()+colisiones.getConjuntoCollisionsLeft(i).getWidth()
                     && player.getPlayer().getY() == colisiones.getConjuntoCollisionsLeft(i).getY()+colisiones.getConjuntoCollisionsRight(i).getHeight()){
                 
-                player.setMover_Left(0);
-                colisiones.setSPEED(0);
-                world.setSPEED(0);
-                break;
+                return true;
             }
             
             else{
@@ -45,9 +39,11 @@ public class DetectorDeColisiones {
                 player.setMover_Left(10);
                 colisiones.setSPEED(5);
                 world.setSPEED(2);
+                
             }        
         }
-                       
+        
+         return false;              
     }
     
     /** Detecta colisiones de extremos básicos por la Derecha
@@ -55,7 +51,7 @@ public class DetectorDeColisiones {
     * @param colisiones Es la referencia a todas las colisiones espaciales
     * @param world Es la referencia al mundo (Puede no ser necesaria)
     */
-    public void BorderCollisionsRight(Player player, CollisionsWorld colisiones, World world){
+    public boolean BorderCollisionsRight(Player player, CollisionsWorld colisiones, World world){
         
         for (int i = 0; i < colisiones.getConjuntoCollisionsRight().length; i++) {
             
@@ -63,20 +59,14 @@ public class DetectorDeColisiones {
                     && player.getPlayer().getY() <= colisiones.getConjuntoCollisionsRight(i).getY()+colisiones.getConjuntoCollisionsRight(i).getHeight()
                     && player.getPlayer().getY()+player.getPlayer().getHeight()>= colisiones.getConjuntoCollisionsRight(i).getY()){
                 
-                player.setMover_Right(0);
-                colisiones.setSPEED(0);
-                world.setSPEED(0);
-                break;
+                return true;
             }
             
             
             else if(player.getPlayer().getX()+player.getPlayer().getWidth() >= colisiones.getConjuntoCollisionsRight(i).getX()
                     && player.getPlayer().getY() == colisiones.getConjuntoCollisionsRight(i).getY()+colisiones.getConjuntoCollisionsRight(i).getHeight()){
                 
-                player.setMover_Right(0);
-                colisiones.setSPEED(0);
-                world.setSPEED(0);
-                break;
+                return true;
             }
             
              else{
@@ -88,7 +78,7 @@ public class DetectorDeColisiones {
  
         }
 
-        
+        return false;
     }
    
     /** Detecta colisiones Con el enemigo
