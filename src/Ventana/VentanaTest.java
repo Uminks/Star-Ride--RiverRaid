@@ -66,6 +66,9 @@ public class VentanaTest extends JFrame{
     
     public void eventos(){
         
+        /**
+         * Boton de menu para ir a Jugar
+         */
         menu.getJugar().addMouseListener(new MouseAdapter(){
             
             public void mouseClicked(java.awt.event.MouseEvent e){
@@ -73,31 +76,39 @@ public class VentanaTest extends JFrame{
                 
                 menu.setVisible(false);
                 game.initComponents();
-                game.run();
                 game.getPanelScore().initComponents();
                 game.getPanelScore().start();
+                game.run();              
                          
             }
             
         });
         
+        /**
+         * Boton de menu para ir a instrucciones
+         */
         menu.getInstrucciones().addMouseListener(new MouseAdapter(){
             
             public void mouseClicked(java.awt.event.MouseEvent e){
                 
                 menu.setVisible(false);
                 instrucciones.setVisible(true);
+                instrucciones.animation();
                          
             }
             
         });
         
+        /**
+         * Boton de Instrucciones para volver al menu pricipal
+         */
         instrucciones.getVolverMenu().addMouseListener(new MouseAdapter(){
             
             public void mouseClicked(java.awt.event.MouseEvent e){
                 
                 menu.setVisible(true);
                 instrucciones.setVisible(false);
+                instrucciones.getAnimationArrows().stop();
                          
             }
             

@@ -30,7 +30,7 @@ public class RunGame extends JPanel{
     private CollisionsWorld colisiones;
     private DetectorDeColisiones detectorColisiones;
     private Timer timerGame;
-    private int Score;
+    private int Score, timeOFgame;
     private boolean dejarDisparar, pause;
     
     private PanelScore panelScore;
@@ -57,7 +57,8 @@ public class RunGame extends JPanel{
         fuelList = new ArrayList<Fuel>();
         colisiones = new CollisionsWorld();
         detectorColisiones = new DetectorDeColisiones();
-        Score = 0;               
+        Score = 0; 
+        timeOFgame = 15;
         dejarDisparar = false;
         pause = false;
         
@@ -221,12 +222,20 @@ public class RunGame extends JPanel{
      */
     public void run(){
         
+        /**
+         * Inicio cuenta Regresiva del Tiempo de Juego
+         */
+        panelScore.timeGame(timeOFgame);
+        
+        /**
+         * Inicio dinámica de Juego
+         */
         timerGame = new Timer(18, new ActionListener(){
            @Override
            public void actionPerformed(ActionEvent e) {
-               
                mundo.moveWorld();
                colisiones.moverColisiones();
+               
                /**
                 * Desplazar todos los enemigos.
                 */
@@ -235,6 +244,7 @@ public class RunGame extends JPanel{
                        enemigos.desplazarse(colisiones.getSPEED());
                    }                
                }
+               
                /**
                 * Desplazar Combustible
                 */
@@ -246,8 +256,7 @@ public class RunGame extends JPanel{
                
                /**
                 * Colisiones del Jugador con los obstáculos
-                */
-               
+                */              
                if(detectorColisiones.BorderCollisionsRight(player, colisiones, mundo) == true
                        || detectorColisiones.BorderCollisionsLeft(player, colisiones, mundo) == true){
 
@@ -272,7 +281,7 @@ public class RunGame extends JPanel{
                         for(Shoot balas: shootList){
                                 
                                 /**
-                                 * Bala => Enemigo
+                                 * Enemigo => Balas
                                  */
                                 if(enemigos.getEnemy().getY()+enemigos.getEnemy().getHeight() > balas.getShoot().getY()
                                         && enemigos.getEnemy().getY() < balas.getShoot().getY()
@@ -302,7 +311,7 @@ public class RunGame extends JPanel{
                                 } 
                                 
                                 /**
-                                 * Balas => fuel
+                                 * Bala => fuels
                                  */                             
                                 for(Fuel fuel: fuelList){
                                     
@@ -310,7 +319,10 @@ public class RunGame extends JPanel{
                                         && fuel.getFuel().getY() < balas.getShoot().getY()
                                         && fuel.getFuel().getX() < balas.getShoot().getX()
                                         && fuel.getFuel().getX() + fuel.getFuel().getWidth() > balas.getShoot().getX()){
-                                     
+                                            
+                                            /**
+                                             * Si elimina un combustible -20
+                                             */
                                             int auxScore = Score-20;
                                             
                                             if(auxScore <= 0){
@@ -331,7 +343,6 @@ public class RunGame extends JPanel{
                                     
                                 }
                             
-
                         }
                         
                         //Si el enemigo sale del mapa
@@ -375,26 +386,26 @@ public class RunGame extends JPanel{
                     timerGame.stop();
                     player.setMover_Left(0);
                     player.setMover_Right(0);
-                    panelScore.getTimer().stop();
+                    panelScore.getTimerFuel().stop();
                     System.out.println("SIN VIDAS");
                     dejarDisparar = true;
                 }
-               
+                /**
+                 * Validando el tiempo de Juego = 0;
+                 */
+                if(panelScore.getIntTiempo()==0){
+                    timerGame.stop();
+                    player.setMover_Left(0);
+                    player.setMover_Right(0);
+                    panelScore.getTimerTiempo().stop();
+                    panelScore.getTimerFuel().stop();
+                    System.out.println("SIN TIEMPO");
+                    dejarDisparar = true;
+                }
            }
        
        });
-        
-        /* ---> Para trabajar
-        Timer endGame = new Timer( 15*1000 , new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-            }
-            
-        });*/
-       
        timerGame.start();
-       
        
        /**
         * ESCUCHADORA ENCARGADA DE GENERAR DISPAROS

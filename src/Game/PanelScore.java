@@ -19,11 +19,9 @@ import javax.swing.Timer;
 public class PanelScore extends JPanel{
     
     private JProgressBar fuel;
-    private int intScore;
-    private JLabel score;
-    private int intLives;
-    private JLabel lives;
-    private Timer timer;
+    private int intTiempo, intScore, intLives;
+    private JLabel tiempo, score, lives;
+    private Timer timerFuel, timerTiempo;
     
     public PanelScore(){
         super.setLayout(null);
@@ -38,6 +36,10 @@ public class PanelScore extends JPanel{
         fuel.setBounds(25, 50, 150, 30);  
         fuel.setValue(100);
         
+        intTiempo = 0;
+        tiempo = new JLabel(String.valueOf(intTiempo));
+        tiempo.setBounds(95, 5, 100, 30);
+        
         intScore = 0;
         score = new JLabel(String.valueOf(intScore));
         score.setBounds(98, 110, 100, 10);
@@ -47,6 +49,7 @@ public class PanelScore extends JPanel{
         lives.setBounds(99, 130, 10, 10);
         
         super.add(fuel);
+        super.add(tiempo);
         super.add(score);
         super.add(lives);
     }
@@ -56,7 +59,7 @@ public class PanelScore extends JPanel{
      */
     public void start(){
                 
-        timer = new Timer(500, new ActionListener(){
+        timerFuel = new Timer(500, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 
@@ -65,7 +68,30 @@ public class PanelScore extends JPanel{
             }
             
         });
-        timer.start();
+        timerFuel.start();
+    }
+    
+    /**
+     * Metodo para el conteo regresivo del tiempo
+     */
+    public void timeGame(int segundos){
+        
+        intTiempo = segundos;
+        tiempo.setText(String.valueOf(intTiempo));
+        
+        timerTiempo = new Timer(1000, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                intTiempo -= 1;
+                tiempo.setText(String.valueOf(intTiempo));
+                
+            }
+            
+        });
+        timerTiempo.start();
+        
+        
     }
 
     /**
@@ -101,14 +127,28 @@ public class PanelScore extends JPanel{
     public int getIntLives() {
         return intLives;
     }
-
+    
+    /**
+     * Pra administrar el tiempo del juego
+     * @return intTiempo Numero de vidas actuales
+     */
+    public int getIntTiempo() {
+        return intTiempo;
+    }
+    
     /**
      * Metodo que Retorna el Timer en Ejecucion del combustible
-     * @return timer el Timer que produce movimiento de la JProgressBar
+     * @return timerFuel el Timer que produce movimiento de la JProgressBar
      */
-    public Timer getTimer() {
-        return timer;
+    public Timer getTimerFuel() {
+        return timerFuel;
     }
 
- 
+    /**
+     * Metodo que Retorna el Timer en Ejecucion del Tiempo de Juego
+     * @return timerTiempo el Timer que produce el decrecimiento del tiempo
+     */
+    public Timer getTimerTiempo() {
+        return timerTiempo;
+    }
 }
