@@ -101,7 +101,7 @@ public class CollisionsWorld {
     /** Eventos del teclado (rapidez) para los obstaculos
      * @param game Panel del juego al que aplican los eventos de teclado
      */
-    public void eventos(JPanel game){
+    public void eventos(JPanel game, final PanelScore panelScore){
         game.addKeyListener(new KeyListener(){
             @Override
             public void keyTyped(KeyEvent e) {}
@@ -109,7 +109,9 @@ public class CollisionsWorld {
             @Override
             public void keyPressed(KeyEvent e) {
                 
-                if(e.getKeyCode() == KeyEvent.VK_UP && SPEED >0){                      
+                if(e.getKeyCode() == KeyEvent.VK_UP && SPEED >0){  
+
+                    panelScore.getFuel().setValue(panelScore.getFuel().getValue()-1);                    
                     SPEED = 20;                     
                 }                            
                 
@@ -118,7 +120,7 @@ public class CollisionsWorld {
             @Override
             public void keyReleased(KeyEvent e) {
                 
-                if(e.getKeyCode() == KeyEvent.VK_UP){               
+                if(e.getKeyCode() == KeyEvent.VK_UP){ 
                     SPEED = 5;
                 }
                     

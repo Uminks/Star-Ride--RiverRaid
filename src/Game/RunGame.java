@@ -30,6 +30,7 @@ public class RunGame extends JPanel{
     private CollisionsWorld colisiones;
     private DetectorDeColisiones detectorColisiones;
     private Timer timerGame;
+    private int Score;
     
     private PanelScore panelScore;
     
@@ -53,14 +54,14 @@ public class RunGame extends JPanel{
         addRandomFuel.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                addRandomFuel.setDelay((RandomTime()+2)*1000);
+                addRandomFuel.setDelay((RandomTime()-1)*1000);
             }
         
         });
         
         
         player.eventos(this);
-        colisiones.eventos(this);
+        colisiones.eventos(this, panelScore);
         
         this.setFocusable(true);
         this.add(player.getPlayer());
@@ -94,6 +95,7 @@ public class RunGame extends JPanel{
         fuelList = new ArrayList<Fuel>();
         colisiones = new CollisionsWorld();
         detectorColisiones = new DetectorDeColisiones();
+        Score = 0;
         
         addRandomEnemy = new Timer( RandomTime()*1000 , new ActionListener(){
             @Override
@@ -130,7 +132,7 @@ public class RunGame extends JPanel{
             
         });
         
-        addRandomFuel = new Timer((RandomTime()+2)*1000, new ActionListener(){
+        addRandomFuel = new Timer((RandomTime()-1)*1000, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 
@@ -160,7 +162,10 @@ public class RunGame extends JPanel{
     public void addEnemy(){
 
         for( Enemy enemigos: enemyList){
-            super.add(enemigos.getEnemy(),0);
+            if(enemigos.getEnemy().isVisible()==true){
+                super.add(enemigos.getEnemy(),0);
+            }
+            
 
         }
         
@@ -180,8 +185,10 @@ public class RunGame extends JPanel{
      * Este metodo agrega combustibles de Tipo JLabel al panel para ser mostrados.
      */
     public void addFuel(){      
-        for(Fuel balas: fuelList){
-            super.add(balas.getFuel(), 0);          
+        for(Fuel fuel: fuelList){
+            if(fuel.getFuel().isVisible() == true){
+                super.add(fuel.getFuel(), 0); 
+            }
         }
     }
     
@@ -225,14 +232,17 @@ public class RunGame extends JPanel{
                 * Desplazar todos los enemigos.
                 */
                for( Enemy enemigos : enemyList){
-                    enemigos.desplazarse(colisiones.getSPEED());
-                   
+                   if(enemigos.getEnemy().isVisible()==true){
+                       enemigos.desplazarse(colisiones.getSPEED());
+                   }                
                }
                /**
                 * Desplazar Combustible
                 */
                for( Fuel fuel : fuelList){
-                    fuel.desplazarse(colisiones.getSPEED());               
+                   if(fuel.getFuel().isVisible() == true){
+                       fuel.desplazarse(colisiones.getSPEED()); 
+                   }                       
                }
                
                detectorColisiones.BorderCollisionsRight(player, colisiones, mundo); 
@@ -246,26 +256,79 @@ public class RunGame extends JPanel{
                         detectorColisiones.BorderCollisionsEnemyRight(enemigos, colisiones, 55);
                         detectorColisiones.BorderCollisionsEnemyLeft(enemigos, colisiones, 55);
                         
-                        //Colisiones enemigos y balas
+                        /**
+                         * Colisiones de balas con otros componentes
+                         */
                         for(Shoot balas: shootList){
-
+                                
+                                /**
+                                 * Bala => Enemigo
+                                 */
                                 if(enemigos.getEnemy().getY()+enemigos.getEnemy().getHeight() > balas.getShoot().getY()
                                         && enemigos.getEnemy().getY() < balas.getShoot().getY()
                                         && enemigos.getEnemy().getX() < balas.getShoot().getX()
                                         && enemigos.getEnemy().getX() + enemigos.getEnemy().getWidth() > balas.getShoot().getX()){
 
+                                        /**
+                                         * Si elimina un TIE +30
+                                         */
+                                        if(enemigos instanceof TIE){
+                                            Score += 30;
+                                        }
+                                        /**
+                                         * Si elimina un asteroide +50
+                                         */
+                                        else if(enemigos instanceof Asteroid){
+                                            Score += 50;
+                                        }
 
-                                    enemigos.getEnemy().setVisible(false);
-                                    enemigos.getEnemy().setLocation(-600, 0);
+                                        enemigos.getEnemy().setVisible(false);
+                                        enemigos.getEnemy().setLocation(-600, 0);
 
-                                    balas.getShoot().setVisible(false);
-                                    balas.getShoot().setLocation(-100, 0);
+                                        balas.getShoot().setVisible(false);
+                                        balas.getShoot().setLocation(-100, 0);
+
+                                        panelScore.setIntScore(Score);
                                 } 
+                                
+                                /**
+                                 * Balas => fuel
+                                 */                             
+                                for(Fuel fuel: fuelList){
+                                    
+                                     if(fuel.getFuel().getY()+fuel.getFuel().getHeight() > balas.getShoot().getY()
+                                        && fuel.getFuel().getY() < balas.getShoot().getY()
+                                        && fuel.getFuel().getX() < balas.getShoot().getX()
+                                        && fuel.getFuel().getX() + fuel.getFuel().getWidth() > balas.getShoot().getX()){
+                                     
+                                            int auxScore = Score-20;
+                                            
+                                            if(auxScore <= 0){
+                                                Score = 0;
+                                            } else{
+                                                Score = auxScore;
+                                            }
+                                            
+                                            panelScore.setIntScore(Score);
+                                            
+                                            fuel.getFuel().setVisible(false);
+                                            fuel.getFuel().setLocation(-600, 0);
+
+                                            balas.getShoot().setVisible(false);
+                                            balas.getShoot().setLocation(-100, 0);
+                                         
+                                     }
+                                    
+                                }
                             
 
                         }
                         
-                   
+                        //Si el enemigo sale del mapa
+                        if(enemigos.getEnemy().getY() >= 650){
+                            enemigos.getEnemy().setVisible(false);
+                        }
+                                        
                }
                
                /**
@@ -276,6 +339,7 @@ public class RunGame extends JPanel{
                    if(detectorColisiones.collisionFuel(player, fuel)==true){
                        fuel.getFuel().setLocation(-600, 0);
                        fuel.getFuel().setVisible(false);
+                       
                        panelScore.getFuel().setValue(100);
                    }
                
@@ -332,7 +396,7 @@ public class RunGame extends JPanel{
     }
 
     /**
-     * 
+     * Utilizado para iniciar el Panel de Score en la Ventana
      * @return panelScore Panel del registro de score
      */
     public PanelScore getPanelScore() {
