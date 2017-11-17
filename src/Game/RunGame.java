@@ -5,6 +5,7 @@
  */
 package Game;
 
+import Graficos.Menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -12,6 +13,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -31,14 +33,16 @@ public class RunGame extends JPanel{
     private DetectorDeColisiones detectorColisiones;
     private Timer timerGame;
     private int Score, timeOFgame;
-    private boolean dejarDisparar, pause;
-    
+    private boolean dejarDisparar, TERMINA_JUEGO;
+       
     private PanelScore panelScore;
+    private Menu refMenu;
+    private String namePlayer;
     
-    public RunGame(PanelScore panelScore){
+    public RunGame(PanelScore panelScore, Menu menu){
         
         this.panelScore = panelScore;
-  
+        this.refMenu = menu;
     }
    
     
@@ -58,9 +62,10 @@ public class RunGame extends JPanel{
         colisiones = new CollisionsWorld();
         detectorColisiones = new DetectorDeColisiones();
         Score = 0; 
-        timeOFgame = 15;
+        timeOFgame = 120; 
         dejarDisparar = false;
-        pause = false;
+        TERMINA_JUEGO = false;
+        
         
         addRandomEnemy = new Timer( RandomTime()*1000 , new ActionListener(){
             @Override
@@ -96,8 +101,7 @@ public class RunGame extends JPanel{
             }
             
         });
-        
-        
+           
         this.addRandomEnemy.start();
         addRandomEnemy.addActionListener(new ActionListener(){
             @Override
@@ -126,8 +130,7 @@ public class RunGame extends JPanel{
             }
         
         });
-        
-
+               
         this.addRandomFuel.start();
         addRandomFuel.addActionListener(new ActionListener(){
             @Override
@@ -136,8 +139,7 @@ public class RunGame extends JPanel{
             }
         
         });
-        
-     
+  
         player.eventos(this);
         colisiones.eventos(this, panelScore);
         
@@ -156,7 +158,7 @@ public class RunGame extends JPanel{
 
     }
     
-    
+   
      /**
      * Este metodo agrega enemigos de Tipo JLabel al panel para ser mostrados.
      */
@@ -373,34 +375,27 @@ public class RunGame extends JPanel{
                  * Validando Combustible = 0 
                  */
                 if(panelScore.getFuel().getValue()<=0){
-                    timerGame.stop();
-                    player.setMover_Left(0);
-                    player.setMover_Right(0);
-                    System.out.println("SIN COMBUSTIBLE");
-                    dejarDisparar = true;
+                    TERMINA_JUEGO = true;
+                    System.out.println(namePlayer+" => SIN COMBUSTIBLE");
                 }
                 /**
                  * Validando Vidas = 0
                  */
                 if(panelScore.getIntLives()==0){
-                    timerGame.stop();
-                    player.setMover_Left(0);
-                    player.setMover_Right(0);
-                    panelScore.getTimerFuel().stop();
-                    System.out.println("SIN VIDAS");
-                    dejarDisparar = true;
+                    TERMINA_JUEGO = true;
+                    System.out.println(namePlayer+" =>SIN VIDAS");
                 }
                 /**
                  * Validando el tiempo de Juego = 0;
                  */
                 if(panelScore.getIntTiempo()==0){
-                    timerGame.stop();
-                    player.setMover_Left(0);
-                    player.setMover_Right(0);
-                    panelScore.getTimerTiempo().stop();
-                    panelScore.getTimerFuel().stop();
-                    System.out.println("SIN TIEMPO");
-                    dejarDisparar = true;
+                    TERMINA_JUEGO = true;                
+                    System.out.println(namePlayer+" =>SIN TIEMPO");                   
+                }
+                
+                
+                if(TERMINA_JUEGO == true){
+                    gameOver();
                 }
            }
        
@@ -426,14 +421,75 @@ public class RunGame extends JPanel{
                     shootList.add(new Shoot(player.getPlayer().getX()+(player.getPlayer().getWidth()/2)-2));
                     addShoot();                  
                 }
+                /**
+                 * PAUSE
+                 */
                 if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-                    timerGame.stop();
+                   detenerProcesos();
+                }
+                else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    reiniciarProcesos();
                 }
             }
        });
        
     }
 
+
+    /**
+     * Metodo que remueve todos los componentes usados anteriormente y ejecuta GAME OVER
+     */
+    public void gameOver(){
+        
+        timerGame.stop();
+        player.setMover_Left(0);
+        player.setMover_Right(0);
+        panelScore.getTimerTiempo().stop();
+        panelScore.getTimerFuel().stop();
+        this.addRandomEnemy.stop();
+        this.addRandomFuel.stop();
+
+        removeAll();
+        panelScore.removeAll();
+        refMenu.setVisible(true);
+    }
+    
+    /**
+     * Metodo para parar los procesos en ejecucion
+     */
+    public void detenerProcesos(){
+        timerGame.stop();
+        colisiones.setSPEED(0);
+        player.setMover_Left(0);
+        player.setMover_Right(0);
+        panelScore.getTimerTiempo().stop();
+        panelScore.getTimerFuel().stop();
+        addRandomEnemy.stop();
+        addRandomFuel.stop();
+        for(Shoot balas: shootList){
+            balas.getTimerDisparo().stop();
+        }
+    }
+    
+    /**
+     * Reiniciar Procesos
+     */
+    public void reiniciarProcesos(){
+        timerGame.start();
+        colisiones.setSPEED(5);
+        player.setMover_Left(10);
+        player.setMover_Right(10);
+        panelScore.getTimerTiempo().start();
+        panelScore.getTimerFuel().start();
+        dejarDisparar = false;
+        addRandomEnemy.start();
+        addRandomFuel.start();
+        for(Shoot balas: shootList){
+            balas.getTimerDisparo().start();
+        }
+    }
+    
+    
     /**
      * Utilizado para iniciar el Panel de Score en la Ventana
      * @return panelScore Panel del registro de score
@@ -441,8 +497,23 @@ public class RunGame extends JPanel{
     public PanelScore getPanelScore() {
         return panelScore;
     }
-    
-    
+
+    /**
+     * Retorna referencia del Timer
+     * @return 
+     */
+    public Timer getTimerGame() {
+        return timerGame;
+    }
+
+    /**
+     * Modifica el nombre Ingresodo por el usuario
+     * @param namePlayer nombre a asignar
+     */
+    public void setNamePlayer(String namePlayer) {
+        this.namePlayer = namePlayer;
+    }
+  
 }
 
 

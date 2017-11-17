@@ -67,4 +67,11 @@ public class Shoot {
         }
     }
     
+    /**
+     * Referencia al timer
+     */  
+    public Timer getTimerDisparo() {
+        return timerDisparo;
+    }
+  
 }

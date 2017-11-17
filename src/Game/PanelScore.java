@@ -59,11 +59,11 @@ public class PanelScore extends JPanel{
      */
     public void start(){
                 
-        timerFuel = new Timer(500, new ActionListener(){
+        timerFuel = new Timer(800, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                fuel.setValue(fuel.getValue()-2);
+                fuel.setValue(fuel.getValue()-1);
                 
             }
             

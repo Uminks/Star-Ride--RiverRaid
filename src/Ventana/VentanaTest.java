@@ -9,11 +9,14 @@ import Game.PanelScore;
 import Game.RunGame;
 import Graficos.Instrucciones;
 import Graficos.Menu;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -44,7 +47,7 @@ public class VentanaTest extends JFrame{
 
         //GAME
         panelScore = new PanelScore();       
-        game = new RunGame(panelScore); 
+        game = new RunGame(panelScore, menu); 
         game.setFocusable(true);
         
         //INSTRUCCIONES
@@ -73,9 +76,9 @@ public class VentanaTest extends JFrame{
             
             public void mouseClicked(java.awt.event.MouseEvent e){
                 
-                
-                menu.setVisible(false);
-                game.initComponents();
+                game.setNamePlayer(JOptionPane.showInputDialog(null, null, "Nombre del Jugador", JOptionPane.PLAIN_MESSAGE));
+                menu.setVisible(false); 
+                game.initComponents();                           
                 game.getPanelScore().initComponents();
                 game.getPanelScore().start();
                 game.run();              
