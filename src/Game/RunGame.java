@@ -6,6 +6,7 @@
 package Game;
 
 import Graficos.Menu;
+import Ventana.VentanaTest;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -36,8 +37,9 @@ public class RunGame extends JPanel{
     private boolean dejarDisparar, TERMINA_JUEGO;
        
     private PanelScore panelScore;
-    private Menu refMenu;
+    private Menu refMenu; 
     private String namePlayer;
+    private SaveScore guardarTOP;
     
     public RunGame(PanelScore panelScore, Menu menu){
         
@@ -62,7 +64,7 @@ public class RunGame extends JPanel{
         colisiones = new CollisionsWorld();
         detectorColisiones = new DetectorDeColisiones();
         Score = 0; 
-        timeOFgame = 120; 
+        timeOFgame = 60; 
         dejarDisparar = false;
         TERMINA_JUEGO = false;
         
@@ -265,6 +267,7 @@ public class RunGame extends JPanel{
                    player.initComponentsPlayer();
                    //Resto vidas Al Player
                    panelScore.setIntLives(panelScore.getIntLives()-1);
+                   panelScore.getFuel().setValue(100);
                    
                }
                
@@ -375,8 +378,10 @@ public class RunGame extends JPanel{
                  * Validando Combustible = 0 
                  */
                 if(panelScore.getFuel().getValue()<=0){
-                    TERMINA_JUEGO = true;
+                    //Resto vidas Al Player
+                   panelScore.setIntLives(panelScore.getIntLives()-1);
                     System.out.println(namePlayer+" => SIN COMBUSTIBLE");
+                    panelScore.getFuel().setValue(100);
                 }
                 /**
                  * Validando Vidas = 0
@@ -446,9 +451,14 @@ public class RunGame extends JPanel{
         player.setMover_Right(0);
         panelScore.getTimerTiempo().stop();
         panelScore.getTimerFuel().stop();
-        this.addRandomEnemy.stop();
-        this.addRandomFuel.stop();
-
+        addRandomEnemy.stop();
+        addRandomFuel.stop();
+        dejarDisparar = true;
+        /**
+         * Guardar en el archivo
+         */
+        guardarTOP = new SaveScore(namePlayer, Score);
+        
         removeAll();
         panelScore.removeAll();
         refMenu.setVisible(true);
@@ -463,7 +473,8 @@ public class RunGame extends JPanel{
         player.setMover_Left(0);
         player.setMover_Right(0);
         panelScore.getTimerTiempo().stop();
-        panelScore.getTimerFuel().stop();
+        panelScore.getTimerFuel().stop();       
+        dejarDisparar = true;
         addRandomEnemy.stop();
         addRandomFuel.stop();
         for(Shoot balas: shootList){
