@@ -35,6 +35,7 @@ public class RunGame extends JPanel{
     private Timer timerGame;
     private int Score, timeOFgame;
     private boolean dejarDisparar, TERMINA_JUEGO;
+    private static int execute = 0;
        
     private PanelScore panelScore;
     private Menu refMenu; 
@@ -410,7 +411,9 @@ public class RunGame extends JPanel{
        /**
         * ESCUCHADORA ENCARGADA DE GENERAR DISPAROS
         */
-       super.addKeyListener(new KeyListener(){
+      
+       if( execute == 0 ){
+           super.addKeyListener(new KeyListener(){
             @Override
             public void keyTyped(KeyEvent e) {
                 }
@@ -437,6 +440,7 @@ public class RunGame extends JPanel{
                 }
             }
        });
+       }
        
     }
 
@@ -454,6 +458,10 @@ public class RunGame extends JPanel{
         addRandomEnemy.stop();
         addRandomFuel.stop();
         dejarDisparar = true;
+        shootList.clear();
+        execute++;
+        RunGame.super.removeAll();
+        RunGame.super.setFocusable(false);
         /**
          * Guardar en el archivo
          */
