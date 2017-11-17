@@ -28,9 +28,9 @@ public class Fuel {
         
         fuel = new JLabel();
         fuel.setBounds(InitX, InitY, 50, 50);
-        image = new ImageIcon("Resources/fuel.png");
+        image = new ImageIcon("Resources/EnergyFinal.gif");
         icon = new ImageIcon(image.getImage().getScaledInstance(image.getIconWidth(), image.getIconHeight(), Image.SCALE_SMOOTH));
-        fuel.setIcon(icon);
+        fuel.setIcon(image);
 
     }
     
