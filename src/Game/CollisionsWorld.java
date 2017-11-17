@@ -16,27 +16,21 @@ public class CollisionsWorld {
     public int SPEED = 5;
     private boolean changeCollisions;
     
-    private JLabel []conjuntoCollisionsRight;
-    
-    
-    private JLabel []conjuntoCollisionsLeft;
-    private JLabel []conjuntoCollisionsLeftAux;
-    
-    private JLabel []conjuntoCollisionsCenter;
+    private JLabel []conjuntoCollisionsRight;  
+    private JLabel []conjuntoCollisionsLeft; 
+    private JLabel collisionsCenter;
     
   
     public CollisionsWorld(){
         
                 
-        conjuntoCollisionsLeft = new JLabel[4];
-         
+        conjuntoCollisionsLeft = new JLabel[4];        
         conjuntoCollisionsRight = new JLabel[4];
-        conjuntoCollisionsCenter = new JLabel[3];
+        collisionsCenter = new JLabel(new ImageIcon("Resources/world/starblack.png"));
         
          for (int i = 0; i < conjuntoCollisionsLeft.length; i++) {
                     
-            conjuntoCollisionsLeft[i] = new JLabel(new ImageIcon("Resources/world/starblack.png"));
-            
+            conjuntoCollisionsLeft[i] = new JLabel(new ImageIcon("Resources/world/starblack.png"));            
             conjuntoCollisionsRight[i] = new JLabel(new ImageIcon("Resources/world/starblack.png"));
          }
         initComponentsCollisions();
@@ -59,9 +53,13 @@ public class CollisionsWorld {
                     conjuntoCollisionsRight[i].setBounds(450, -2800, ANCHO_EXTREMO*2, 500);
                     break;
                 case 2:
+                    
+                    collisionsCenter.setBounds(215, -2000, 155, 150);
+                    
                     conjuntoCollisionsLeft[i].setBounds(50, -1550, ANCHO_EXTREMO*3, 300);
                                          
                     conjuntoCollisionsRight[i].setBounds(400, -1550, ANCHO_EXTREMO*3, 300);
+                                     
                     break;
                 case 3:
                     conjuntoCollisionsLeft[i].setBounds(50, -600, ANCHO_EXTREMO*2, 600);
@@ -90,8 +88,10 @@ public class CollisionsWorld {
         else{         
             for (int i = 0; i < conjuntoCollisionsLeft.length; i++) {
              conjuntoCollisionsLeft[i].setLocation(conjuntoCollisionsLeft[i].getX(), conjuntoCollisionsLeft[i].getY()+SPEED);
-             conjuntoCollisionsRight[i].setLocation(conjuntoCollisionsRight[i].getX(), conjuntoCollisionsRight[i].getY()+SPEED);
+             conjuntoCollisionsRight[i].setLocation(conjuntoCollisionsRight[i].getX(), conjuntoCollisionsRight[i].getY()+SPEED);            
             } 
+            collisionsCenter.setLocation(collisionsCenter.getX(), collisionsCenter.getY()+SPEED);
+             
         } 
         
     }
@@ -178,8 +178,16 @@ public class CollisionsWorld {
     public JLabel[] getConjuntoCollisionsRight() {
         return  conjuntoCollisionsRight;
     }    
+
+    /**
+     * 
+     * @return collisionsCenter obstaculo central
+     */
+    public JLabel getCollisionsCenter() {
+        return collisionsCenter;
+    }
     
- 
+    
     
     
 }

@@ -38,7 +38,7 @@ public class Instrucciones extends JPanel{
     private JLabel volverMenu, up, left, right, keyboard, fuel, pause, enter;
     private JLabel combustible, pausa, reanudar;
     private Timer animationArrows;
-    private static Font StarJedi;
+    private Font StarJedi;
     int changeImage;
     
     public Instrucciones(){
@@ -112,7 +112,7 @@ public class Instrucciones extends JPanel{
         
         combustible = new JLabel();
         combustible.setBounds(510, 325, 150, 40);
-        StarJedi = cargarFuente("/Resources/Starjedi.ttf");
+        StarJedi = cargarFuente("../Starjedi.ttf");
         combustible.setForeground(Color.WHITE);
         combustible.setFont(StarJedi);
         combustible.setText("Combustible");
@@ -138,13 +138,13 @@ public class Instrucciones extends JPanel{
      * @return retorna una fuente personalizada
      */
     public Font cargarFuente(String ruta){
+        Font fuente=null; 
+        InputStream entrada = getClass().getResourceAsStream(ruta);
         
-        Font fuente=null;  
-        InputStream entrada = getClass().getClassLoader().getResourceAsStream(ruta); 
-        
-        try {
+        try {                 
             fuente = Font.createFont(Font.TRUETYPE_FONT, entrada);
-            fuente = fuente.deriveFont(1,24f);
+            fuente = fuente.deriveFont(1,12f);
+            
         } catch (FontFormatException ex) {
             fuente = new Font("Arial", Font.PLAIN, 19);  
             System.out.println("Error de Formato");
@@ -153,9 +153,7 @@ public class Instrucciones extends JPanel{
             System.out.println(entrada);
             System.out.println("Error de Entrada y Salida de Datos");
         }
-        
-        
-        
+     
         return fuente;  
     }
     

@@ -14,9 +14,9 @@ public class DetectorDeColisiones {
     /** Detecta colisiones de extremos básicos por la Izquierda
     * @param player Es la referencia a la nave del jugador
     * @param colisiones Es la referencia a todas las colisiones espaciales
-    * @param world Es la referencia al mundo (Puede no ser necesaria)
+    * @return true or false de la colision
     */
-    public boolean BorderCollisionsLeft(Player player, CollisionsWorld colisiones, World world){
+    public boolean BorderCollisionsLeft(Player player, CollisionsWorld colisiones){
         
 
         for (int i = 0; i < colisiones.getConjuntoCollisionsLeft().length; i++) {
@@ -38,7 +38,6 @@ public class DetectorDeColisiones {
                 //Si no hay colision continúo con la ejecución normal
                 player.setMover_Left(10);
                 colisiones.setSPEED(5);
-                world.setSPEED(2);
                 
             }        
         }
@@ -49,9 +48,9 @@ public class DetectorDeColisiones {
     /** Detecta colisiones de extremos básicos por la Derecha
     * @param player Es la referencia a la nave del jugador
     * @param colisiones Es la referencia a todas las colisiones espaciales
-    * @param world Es la referencia al mundo (Puede no ser necesaria)
+    * @return true or false de la colision
     */
-    public boolean BorderCollisionsRight(Player player, CollisionsWorld colisiones, World world){
+    public boolean BorderCollisionsRight(Player player, CollisionsWorld colisiones){
         
         for (int i = 0; i < colisiones.getConjuntoCollisionsRight().length; i++) {
             
@@ -73,7 +72,6 @@ public class DetectorDeColisiones {
                  //Si no hay colision continúo con la ejecución normal
                 player.setMover_Right(10);
                 colisiones.setSPEED(5);
-                world.setSPEED(2);
             }
  
         }
@@ -81,6 +79,44 @@ public class DetectorDeColisiones {
         return false;
     }
    
+    /** Detecta colisiones del bloque del centro
+    * @param player Es la referencia a la nave del jugador
+    * @param colisiones Es la referencia a todas las colisiones espaciales
+    * @return true or false de la colision
+     */
+    public boolean collisionsCenter(Player player, CollisionsWorld colisiones){
+        
+        if(colisiones.getCollisionsCenter().getY() + colisiones.getCollisionsCenter().getHeight() >= player.getPlayer().getY()
+                && colisiones.getCollisionsCenter().getY() <=  player.getPlayer().getY() + player.getPlayer().getHeight()
+                && colisiones.getCollisionsCenter().getX() <= player.getPlayer().getX() + player.getPlayer().getWidth()
+                && colisiones.getCollisionsCenter().getX()+ colisiones.getCollisionsCenter().getWidth() >= player.getPlayer().getX()){
+            
+            return true;
+            
+        }
+
+        return false;
+        
+    }
+    
+    /**
+     * Detecta la colision Enemigo-Juagdor
+     * @param player referencia al jugador
+     * @param enemy refferencia al enemigo
+     */
+    public boolean collisionPlayerEnemy(Player player, Enemy enemy){
+        
+        if(player.getPlayer().getY() <= enemy.getEnemy().getY()+enemy.getEnemy().getHeight()
+                && player.getPlayer().getY()+player.getPlayer().getHeight() >= enemy.getEnemy().getY()
+                && player.getPlayer().getX() <= enemy.getEnemy().getX()+enemy.getEnemy().getWidth()
+                && player.getPlayer().getX()+player.getPlayer().getWidth() >= enemy.getEnemy().getX()){
+            
+            return true;
+        }
+            
+        
+       return false; 
+    }
     /** Detecta colisiones Con el enemigo
     * @param enemy Es la referencia al enemigo
     * @param colisiones Es la referencia a todas las colisiones espaciales
@@ -115,10 +151,27 @@ public class DetectorDeColisiones {
                     && enemy.getEnemy().getY()+PIXELES >= colisiones.getConjuntoCollisionsLeft(i).getY()){
                 
                 enemy.setVelocidad(enemy.getVelocidad()*(-1));
-               enemy.getEnemy().setLocation(enemy.getEnemy().getX()+ enemy.getVelocidad(), enemy.getEnemy().getY()); 
+                enemy.getEnemy().setLocation(enemy.getEnemy().getX()+ enemy.getVelocidad(), enemy.getEnemy().getY()); 
                 break;
             }               
         }               
+    }
+    /** Detecta colisiones del bloque del centro para el enemigo
+    * @param player Es la referencia a la nave del jugador
+    * @param colisiones Es la referencia a todas las colisiones espaciales
+    * @return true or false de la colision
+     */
+    public void collisionsCenterEnemy(Enemy enemy, CollisionsWorld colisiones){
+        
+        if(colisiones.getCollisionsCenter().getY() + colisiones.getCollisionsCenter().getHeight() >= enemy.getEnemy().getY()
+                && colisiones.getCollisionsCenter().getY() <=  enemy.getEnemy().getY() + enemy.getEnemy().getHeight()
+                && colisiones.getCollisionsCenter().getX() <= enemy.getEnemy().getX() + enemy.getEnemy().getWidth()
+                && colisiones.getCollisionsCenter().getX()+ colisiones.getCollisionsCenter().getWidth() >= enemy.getEnemy().getX()){
+            
+            enemy.setVelocidad(enemy.getVelocidad()*(-1));
+            enemy.getEnemy().setLocation(enemy.getInitX()+ enemy.getVelocidad(), enemy.getInitY());          
+        }
+        
     }
     
     /** Detecta clisiones Fuel y player
