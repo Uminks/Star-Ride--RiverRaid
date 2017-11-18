@@ -224,5 +224,9 @@ public class Menu extends JPanel {
     public JLabel getInstrucciones() {
         return instrucciones;
     }
+    
+    public JLabel getCreditos(){
+        return creditos;
+    }
       
 }

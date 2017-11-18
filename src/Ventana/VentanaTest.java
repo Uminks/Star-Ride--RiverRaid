@@ -7,6 +7,7 @@ package Ventana;
 
 import Game.PanelScore;
 import Game.RunGame;
+import Graficos.Creditos;
 import Graficos.Instrucciones;
 import Graficos.Menu;
 import java.awt.event.ActionEvent;
@@ -29,7 +30,8 @@ public class VentanaTest extends JFrame{
     private Menu menu;
     private RunGame game;
     private PanelScore panelScore;
-    Instrucciones instrucciones;
+    private Instrucciones instrucciones;
+    private Creditos creditos;
     
     public VentanaTest(){
         
@@ -54,9 +56,14 @@ public class VentanaTest extends JFrame{
         instrucciones = new Instrucciones();
         instrucciones.setVisible(false);
         
+        //CREDITOS
+        creditos = new Creditos();
+        creditos.setVisible(false);
+        
         super.add(panelScore);
         super.add(game);
         super.add(instrucciones, 0);
+        super.add(creditos, 0);
         super.add(menu, 0);
         
         
@@ -103,6 +110,20 @@ public class VentanaTest extends JFrame{
         });
         
         /**
+         * Boton de menu para ir a creditos
+         */
+        menu.getCreditos().addMouseListener(new MouseAdapter(){
+            
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e){
+                
+                menu.setVisible(false);
+                creditos.setVisible(true);
+                         
+            }
+        });
+        
+        /**
          * Boton de Instrucciones para volver al menu pricipal
          */
         instrucciones.getVolverMenu().addMouseListener(new MouseAdapter(){
@@ -115,6 +136,20 @@ public class VentanaTest extends JFrame{
                          
             }
             
+        });
+        
+        /**
+         * Boton de Creditos para volver al menu pricipal
+         */
+        creditos.getvolverMenu().addMouseListener(new MouseAdapter(){
+             
+            public void mouseClicked(java.awt.event.MouseEvent e){
+                
+                menu.setVisible(true);
+                creditos.setVisible(false);
+                
+            }
+        
         });
         
     }

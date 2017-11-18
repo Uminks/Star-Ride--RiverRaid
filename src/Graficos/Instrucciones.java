@@ -144,7 +144,7 @@ public class Instrucciones extends JPanel{
         try {                 
             fuente = Font.createFont(Font.TRUETYPE_FONT, entrada);
             fuente = fuente.deriveFont(1,12f);
-            
+
         } catch (FontFormatException ex) {
             fuente = new Font("Arial", Font.PLAIN, 19);  
             System.out.println("Error de Formato");
@@ -217,7 +217,6 @@ public class Instrucciones extends JPanel{
     */
     public Icon AsignLabelDimension(ImageIcon Button, JLabel Container){
         
-       
        return new ImageIcon(Button.getImage().getScaledInstance(Container.getWidth(),Container.getHeight(),Image.SCALE_SMOOTH));
        
     }
