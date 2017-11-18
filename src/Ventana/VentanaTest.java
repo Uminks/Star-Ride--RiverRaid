@@ -10,12 +10,16 @@ import Game.RunGame;
 import Graficos.Creditos;
 import Graficos.Instrucciones;
 import Graficos.Menu;
+import Graficos.Top10;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -32,6 +36,7 @@ public class VentanaTest extends JFrame{
     private PanelScore panelScore;
     private Instrucciones instrucciones;
     private Creditos creditos;
+    private Top10 top10;
     
     public VentanaTest(){
         
@@ -60,10 +65,16 @@ public class VentanaTest extends JFrame{
         creditos = new Creditos();
         creditos.setVisible(false);
         
+        //TOP10
+        top10 = new Top10();
+        top10.setVisible(false);
+        
+        
         super.add(panelScore);
         super.add(game);
         super.add(instrucciones, 0);
         super.add(creditos, 0);
+        super.add(top10,0);
         super.add(menu, 0);
         
         
@@ -90,6 +101,22 @@ public class VentanaTest extends JFrame{
                 game.getPanelScore().start();
                 game.run();              
                          
+            }
+            
+        });
+        
+        
+        /**
+         * Boton de menu pero ir a top10.
+         */
+        menu.getTop10().addMouseListener(new MouseAdapter(){
+        
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e){
+                
+                menu.setVisible(false);
+                top10.setVisible(true);
+                
             }
             
         });
@@ -150,6 +177,22 @@ public class VentanaTest extends JFrame{
                 
             }
         
+        });
+        
+        /**
+         * Boton de Top10 para volver al menu principal.
+         */
+        
+        top10.getvolverMenu().addMouseListener(new MouseAdapter(){
+        
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e){
+            
+                menu.setVisible(true);
+                top10.setVisible(false);
+                
+            }
+            
         });
         
     }
