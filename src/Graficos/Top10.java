@@ -51,8 +51,11 @@ public class Top10 extends JPanel {
         super.setLayout(null);
         super.setBounds(0, 0, 800, 600);
         this.initComponents();    
-        this.cargarLabels();      
-        super.add(volverMenu);
+        
+        this.Update();
+        
+        super.add(volverMenu);      
+        
         
     }
     
@@ -72,13 +75,34 @@ public class Top10 extends JPanel {
         Nombres = new String[10];
         Puntos = new int[10];
         StarJedi = cargarFuente("../Starjedi.ttf");
+       
+        
+    }
+     
+     public void Update(){
+        
+        for (int i = 0; i <= TopPlayers; i++) {
+             super.remove(Name[i]);
+             super.remove(Score[i]);
+             super.remove(Position[i]);
+        }      
+        TopPlayers = -1;
+         
         try {
             this.leerArchivo();
         } catch (IOException ex) {
             System.out.println("Error de Entrada y Salida de Datos");
         }
         
-    }
+        this.cargarLabels(); 
+        
+        for (int i = 0; i <= TopPlayers; i++) {
+             super.add(Name[i]);
+             super.add(Score[i]);
+             super.add(Position[i]);
+        }
+        
+     }
     
      /**
       * Metodo Para Leer Archivos del TOP10 De la carpeta principal.
@@ -110,6 +134,7 @@ public class Top10 extends JPanel {
             
         }
          
+        archivo.close();
         
      }
     
@@ -147,18 +172,8 @@ public class Top10 extends JPanel {
             
             YInit += 45;
              
-             super.add(Name[i]);
-             super.add(Score[i]);
-             super.add(Position[i]);
          }
          
-         
-         
-        
-         
-         
-         
-    
      }
     
      /**

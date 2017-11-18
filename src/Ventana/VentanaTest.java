@@ -116,7 +116,7 @@ public class VentanaTest extends JFrame{
                 
                 menu.setVisible(false);
                 top10.setVisible(true);
-                
+                top10.Update();
             }
             
         });
