@@ -41,6 +41,7 @@ public class RunGame extends JPanel{
     private Menu refMenu; 
     private String namePlayer;
     private SaveScore guardarTOP;
+    private AnimacionExplosion explosion;
     
     public RunGame(PanelScore panelScore, Menu menu){
         
@@ -64,6 +65,7 @@ public class RunGame extends JPanel{
         fuelList = new ArrayList<Fuel>();
         colisiones = new CollisionsWorld();
         detectorColisiones = new DetectorDeColisiones();
+        explosion = new AnimacionExplosion();
         Score = 0; 
         timeOFgame = 60; 
         dejarDisparar = false;
@@ -242,6 +244,8 @@ public class RunGame extends JPanel{
            public void actionPerformed(ActionEvent e) {
                mundo.moveWorld();
                colisiones.moverColisiones();
+               //COMPROBAR AL INICIO CADA STOP
+               comprobarSTOP();
                
                /**
                 * Desplazar todos los enemigos.
@@ -268,6 +272,7 @@ public class RunGame extends JPanel{
                        || detectorColisiones.BorderCollisionsLeft(player, colisiones) == true
                        || detectorColisiones.collisionsCenter(player, colisiones)==true){
 
+                   explosion.animacionExplosion(player, timerGame);
                    playerColisiona = true;
                    
                }
@@ -277,9 +282,12 @@ public class RunGame extends JPanel{
                 * Validar colisiones de todos los enemigos.
                 */
                for( Enemy enemigos : enemyList){
-                    if(enemigos.getEnemy().isVisible()){  
+                   
+                    if(enemigos.getEnemy().isVisible()){
+                        
                             //Player => Enemigos
                             if(detectorColisiones.collisionPlayerEnemy(player, enemigos)==true){
+                                explosion.animacionExplosion(player, timerGame);
                                 playerColisiona = true;
                             }
 
@@ -306,16 +314,21 @@ public class RunGame extends JPanel{
                                              */                                            
                                             if(enemigos instanceof TIE){
                                                 Score += 30;
+                                                explosion.animacionExplosion(enemigos);  
                                             }
                                             /**
                                              * Si elimina un asteroide +50
                                              */
                                             else if(enemigos instanceof Asteroid){
                                                 Score += 50;
+                                                enemigos.getEnemy().setVisible(false);
+                                                enemigos.getEnemy().setLocation(-600, 0);
+                                                
                                             }
-
-                                            enemigos.getEnemy().setVisible(false);
-                                            enemigos.getEnemy().setLocation(-600, 0);
+                                            
+                                            
+                                            
+                                            
 
                                             balas.getShoot().setVisible(false);
                                             balas.getShoot().setLocation(-100, 0);
@@ -378,57 +391,8 @@ public class RunGame extends JPanel{
                    }
                
                }
+                          
                
-               /**
-                * Colisiones player y enemigos
-                */
-               
-               
-               /************************************************************/
-               /****************** STOPS EN EJECUCIÓN ***********************/
-               /************************************************************/
-                /**
-                 * Validando Combustible = 0 
-                 */
-                if(panelScore.getFuel().getValue()<=0){
-                    //Resto vidas Al Player
-                   panelScore.setIntLives(panelScore.getIntLives()-1);
-                    System.out.println(namePlayer+" => SIN COMBUSTIBLE");
-                    panelScore.getFuel().setValue(100);
-                }
-                if(playerColisiona == true){
-                    player.initComponentsPlayer();
-                    //Resto vidas Al Player
-                    panelScore.setIntLives(panelScore.getIntLives()-1);
-                    panelScore.getFuel().setValue(100);
-                    //Reinio mapa
-                    colisiones.initComponentsCollisions();
-                    //Elimino enemigos visibles en el mapa
-                    for(Enemy enemigo : enemyList){
-                        enemigo.getEnemy().setVisible(false);
-                        enemigo.getEnemy().setLocation(-600, 0);
-                    }
-                    playerColisiona = false;
-                }
-                /**
-                 * Validando Vidas = 0
-                 */
-                if(panelScore.getIntLives()==0){
-                    TERMINA_JUEGO = true;
-                    System.out.println(namePlayer+" =>SIN VIDAS");
-                }
-                /**
-                 * Validando el tiempo de Juego = 0;
-                 */
-                if(panelScore.getIntTiempo()==0){
-                    TERMINA_JUEGO = true;                
-                    System.out.println(namePlayer+" =>SIN TIEMPO");                   
-                }
-                
-                
-                if(TERMINA_JUEGO == true){
-                    gameOver();
-                }
            }
            
        });
@@ -469,12 +433,62 @@ public class RunGame extends JPanel{
        }
        
     }
+    
+    private void comprobarSTOP(){
+        
+        /************************************************************/
+        /****************** STOPS EN EJECUCIÓN ***********************/
+        /************************************************************/
+         /**
+          * Validando Combustible = 0 
+          */
+         if(panelScore.getFuel().getValue()<=0){
+             //Resto vidas Al Player
+            panelScore.setIntLives(panelScore.getIntLives()-1);
+             System.out.println(namePlayer+" => SIN COMBUSTIBLE");
+             panelScore.getFuel().setValue(100);
+         }
+         if(playerColisiona == true){
+             player.initComponentsPlayer();
+             //Resto vidas Al Player
+             panelScore.setIntLives(panelScore.getIntLives()-1);
+             panelScore.getFuel().setValue(100);
+             //Reinio mapa
+             colisiones.initComponentsCollisions();
+             //Elimino enemigos visibles en el mapa
+             for(Enemy enemigo : enemyList){
+                 enemigo.getEnemy().setVisible(false);
+                 enemigo.getEnemy().setLocation(-600, 0);
+             }
+             playerColisiona = false;
+         }
+         /**
+          * Validando Vidas = 0
+          */
+         if(panelScore.getIntLives()==0){
+             TERMINA_JUEGO = true;
+             System.out.println(namePlayer+" =>SIN VIDAS");
+         }
+         /**
+          * Validando el tiempo de Juego = 0;
+          */
+         if(panelScore.getIntTiempo()==0){
+             TERMINA_JUEGO = true;                
+             System.out.println(namePlayer+" =>SIN TIEMPO");                   
+         }
+
+
+         if(TERMINA_JUEGO == true){
+             gameOver();
+         }
+        
+    }
 
 
     /**
      * Metodo que remueve todos los componentes usados anteriormente y ejecuta GAME OVER
      */
-    public void gameOver(){
+    private void gameOver(){
         
         timerGame.stop();
         player.setMover_Left(0);
@@ -503,7 +517,7 @@ public class RunGame extends JPanel{
     /**
      * Metodo para parar los procesos en ejecucion
      */
-    public void detenerProcesos(){
+    private void detenerProcesos(){
         timerGame.stop();
         colisiones.setSPEED(0);
         player.setMover_Left(0);
@@ -521,7 +535,7 @@ public class RunGame extends JPanel{
     /**
      * Reiniciar Procesos
      */
-    public void reiniciarProcesos(){
+    private void reiniciarProcesos(){
         timerGame.start();
         colisiones.setSPEED(5);
         player.setMover_Left(10);
