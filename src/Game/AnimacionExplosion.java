@@ -22,7 +22,7 @@ public class AnimacionExplosion {
      * @param timerG timer de juego
      */
     public void animacionExplosion(final Player player, Timer timerG){ 
-        timerG.stop();
+        
         icon = new ImageIcon("Resources/Explosion1.gif");
         animacion(player, 0, timerG);
     }

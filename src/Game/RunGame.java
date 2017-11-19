@@ -34,7 +34,7 @@ public class RunGame extends JPanel{
     private DetectorDeColisiones detectorColisiones;
     private Timer timerGame;
     private int Score, timeOFgame;
-    private boolean dejarDisparar,playerColisiona, TERMINA_JUEGO;
+    private boolean dejarDisparar,playerColisiona, TERMINA_JUEGO, vieneESC;
     private static int execute = 0;
        
     private PanelScore panelScore;
@@ -272,6 +272,7 @@ public class RunGame extends JPanel{
                        || detectorColisiones.BorderCollisionsLeft(player, colisiones) == true
                        || detectorColisiones.collisionsCenter(player, colisiones)==true){
 
+                   detenerProcesos();
                    explosion.animacionExplosion(player, timerGame);
                    playerColisiona = true;
                    
@@ -288,6 +289,7 @@ public class RunGame extends JPanel{
                         //Player => Enemigos
                         if(detectorColisiones.collisionPlayerEnemy(player, enemigos)==true
                                 && enemigos.isNoComprobar()==false){
+                            detenerProcesos();
                             explosion.animacionExplosion(player, timerGame);
                             playerColisiona = true;
                         }
@@ -404,7 +406,7 @@ public class RunGame extends JPanel{
        /**
         * ESCUCHADORA ENCARGADA DE GENERAR DISPAROS
         */
-      
+       vieneESC = false; 
        if( execute == 0 ){
            super.addKeyListener(new KeyListener(){
             @Override
@@ -427,9 +429,14 @@ public class RunGame extends JPanel{
                  */
                 if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
                    detenerProcesos();
+                   vieneESC = true;
                 }
                 else if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                    reiniciarProcesos();
+                    if(timerGame.isRunning() || vieneESC){
+                        reiniciarProcesos();
+                        vieneESC = false;
+                    }
+                    
                 }
             }
        });
@@ -464,6 +471,7 @@ public class RunGame extends JPanel{
                  enemigo.getEnemy().setLocation(-600, 0);
              }
              playerColisiona = false;
+             reiniciarProcesos();
          }
          /**
           * Validando Vidas = 0
