@@ -53,7 +53,8 @@ public class VentanaTest extends JFrame{
         
 
         //GAME
-        panelScore = new PanelScore();       
+        panelScore = new PanelScore();
+        panelScore.setVisible(false);
         game = new RunGame(panelScore, menu); 
         game.setFocusable(true);
         
@@ -99,6 +100,7 @@ public class VentanaTest extends JFrame{
                 game.initComponents();                           
                 game.getPanelScore().initComponents();
                 game.getPanelScore().start();
+                game.getPanelScore().setVisible(true);
                 game.run();              
                          
             }

@@ -8,10 +8,13 @@ package Game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -30,12 +33,22 @@ public class PanelScore extends JPanel{
     private JLabel iconTiempo, iconScore, iconLives;
     private JLabel tiempo, score, lives;
     private Timer timerFuel, timerTiempo;
+    private Image background = new ImageIcon("Resources/ScoreBorder.gif").getImage();;
     
     public PanelScore(){
         super.setLayout(null);
         super.setBackground(Color.black);
         super.setBounds(600, 0, 200, 600); 
         
+    }
+    
+    @Override
+    public void paintComponent(Graphics g){
+        
+        if( isVisible() ){
+           g.drawImage(background, 0, 0, getWidth(), getHeight(),this); 
+        }
+    
     }
     
     /**
@@ -86,6 +99,7 @@ public class PanelScore extends JPanel{
         fuel = new JProgressBar(0);
         fuel.setBounds(25, 325+extra, 150, 30);  
         fuel.setValue(100);
+        fuel.setBackground(Color.BLACK);
         
         /**
          * TODO VIDAS
@@ -121,7 +135,7 @@ public class PanelScore extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                fuel.setValue(fuel.getValue()-1);
+                fuel.setValue(fuel.getValue()-2);
                 
             }
             

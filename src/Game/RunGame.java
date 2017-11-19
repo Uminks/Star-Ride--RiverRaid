@@ -233,6 +233,7 @@ public class RunGame extends JPanel{
          */
         panelScore.timeGame(timeOFgame);
         
+
         /**
          * Inicio dinámica de Juego
          */
@@ -302,7 +303,7 @@ public class RunGame extends JPanel{
 
                                             /**
                                              * Si elimina un TIE +30
-                                             */
+                                             */                                            
                                             if(enemigos instanceof TIE){
                                                 Score += 30;
                                             }
@@ -482,6 +483,7 @@ public class RunGame extends JPanel{
         panelScore.getTimerFuel().stop();
         addRandomEnemy.stop();
         addRandomFuel.stop();
+        panelScore.setVisible(false);
         dejarDisparar = true;
         
         /**

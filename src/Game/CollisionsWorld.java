@@ -26,12 +26,13 @@ public class CollisionsWorld {
                 
         conjuntoCollisionsLeft = new JLabel[4];        
         conjuntoCollisionsRight = new JLabel[4];
-        collisionsCenter = new JLabel(new ImageIcon("Resources/world/starblack.png"));
+        collisionsCenter = new JLabel(new ImageIcon("Resources/world/colisionCenter.gif"));
         
          for (int i = 0; i < conjuntoCollisionsLeft.length; i++) {
                     
             conjuntoCollisionsLeft[i] = new JLabel(new ImageIcon("Resources/world/starblack.png"));            
             conjuntoCollisionsRight[i] = new JLabel(new ImageIcon("Resources/world/starblack.png"));
+            
          }
         initComponentsCollisions();
     }

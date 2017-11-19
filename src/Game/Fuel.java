@@ -5,6 +5,7 @@
  */
 package Game;
 
+import java.awt.Color;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -31,7 +32,7 @@ public class Fuel {
         image = new ImageIcon("Resources/EnergyFinal.gif");
         icon = new ImageIcon(image.getImage().getScaledInstance(image.getIconWidth(), image.getIconHeight(), Image.SCALE_SMOOTH));
         fuel.setIcon(image);
-
+  
     }
     
     public void desplazarse(int SPEED){
