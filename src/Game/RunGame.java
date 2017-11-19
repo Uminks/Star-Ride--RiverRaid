@@ -285,12 +285,13 @@ public class RunGame extends JPanel{
                    
                     if(enemigos.getEnemy().isVisible()){
                         
-                            //Player => Enemigos
-                            if(detectorColisiones.collisionPlayerEnemy(player, enemigos)==true){
-                                explosion.animacionExplosion(player, timerGame);
-                                playerColisiona = true;
-                            }
-
+                        //Player => Enemigos
+                        if(detectorColisiones.collisionPlayerEnemy(player, enemigos)==true
+                                && enemigos.isNoComprobar()==false){
+                            explosion.animacionExplosion(player, timerGame);
+                            playerColisiona = true;
+                        }
+                        else{    
                             //Enemigo => Obstaculos
                             detectorColisiones.BorderCollisionsEnemyRight(enemigos, colisiones, 55);
                             detectorColisiones.BorderCollisionsEnemyLeft(enemigos, colisiones, 55);
@@ -313,8 +314,10 @@ public class RunGame extends JPanel{
                                              * Si elimina un TIE +30
                                              */                                            
                                             if(enemigos instanceof TIE){
+                                                enemigos.setNoComprobar(true);
+                                                explosion.animacionExplosion(enemigos);
                                                 Score += 30;
-                                                explosion.animacionExplosion(enemigos);  
+                                                
                                             }
                                             /**
                                              * Si elimina un asteroide +50
@@ -322,10 +325,9 @@ public class RunGame extends JPanel{
                                             else if(enemigos instanceof Asteroid){
                                                 Score += 50;
                                                 enemigos.getEnemy().setVisible(false);
-                                                enemigos.getEnemy().setLocation(-600, 0);
+                                                enemigos.getEnemy().setLocation(-600, 0);                   
                                                 
                                             }
-                                            
                                             
                                             
                                             
@@ -375,6 +377,7 @@ public class RunGame extends JPanel{
                             if(enemigos.getEnemy().getY() >= 650){
                                 enemigos.getEnemy().setVisible(false);
                             }
+                        }
                     }                     
                }
                

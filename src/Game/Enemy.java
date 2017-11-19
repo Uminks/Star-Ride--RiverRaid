@@ -22,6 +22,7 @@ public abstract class Enemy {
     private ImageIcon image;
     private Icon icon;
     private JLabel enemy;
+    private boolean noComprobar;
         
     /**
      * Constructor de la clase Enemy asigna valores iniciales de su aparición, asigna velocidad y recibe un ImageIcon que posteriormente transformara en Icon.
@@ -39,6 +40,7 @@ public abstract class Enemy {
         enemy.setBounds(InitX, InitY, 55, 55);
         icon = new ImageIcon(image.getImage().getScaledInstance(enemy.getWidth(), enemy.getHeight(), Image.SCALE_SMOOTH));
         enemy.setIcon(icon);
+        noComprobar = false;
     }
 
     public int getVelocidad() {
@@ -74,5 +76,14 @@ public abstract class Enemy {
     }
     
     public abstract void desplazarse(int SPEED);
+
+    public boolean isNoComprobar() {
+        return noComprobar;
+    }
+
+    public void setNoComprobar(boolean noComprobar) {
+        this.noComprobar = noComprobar;
+    }
+    
     
 }

@@ -56,11 +56,10 @@ public class AnimacionExplosion {
                    enemy.getEnemy().setIcon(icon);
                    icon.getImage().flush();
                    
-                   if(cont == 1400){
-                       timer.stop();
+                   if(cont == 1400){                    
                        enemy.getEnemy().setVisible(false);
                        enemy.getEnemy().setLocation(-600, 0);
-                       
+                       timer.stop();
                    }
 
                }
