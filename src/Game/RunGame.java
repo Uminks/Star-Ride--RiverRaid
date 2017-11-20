@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import Sounds.EfectosSonido;
 
 /**
  *
@@ -34,7 +35,7 @@ public class RunGame extends JPanel{
     private DetectorDeColisiones detectorColisiones;
     private Timer timerGame;
     private int Score, timeOFgame;
-    private boolean dejarDisparar,playerColisiona, TERMINA_JUEGO, vieneESC;
+    private boolean dejarDisparar,playerColisiona, TERMINA_JUEGO, ESC;
     private static int execute = 0;
        
     private PanelScore panelScore;
@@ -42,6 +43,7 @@ public class RunGame extends JPanel{
     private String namePlayer;
     private SaveScore guardarTOP;
     private AnimacionExplosion explosion;
+    private EfectosSonido sonido;
     
     public RunGame(PanelScore panelScore, Menu menu){
         
@@ -71,7 +73,7 @@ public class RunGame extends JPanel{
         dejarDisparar = false;
         TERMINA_JUEGO = false;
         playerColisiona=false;
-        
+        sonido = new EfectosSonido();
         
         addRandomEnemy = new Timer( RandomTime()*1000 , new ActionListener(){
             @Override
@@ -229,7 +231,7 @@ public class RunGame extends JPanel{
      * Ejecuta todas la funciones de ejecuciones del juego
      */
     public void run(){
-        
+        sonido.reproducirSonidoJuego();
         /**
          * Inicio cuenta Regresiva del Tiempo de Juego
          */
@@ -271,133 +273,137 @@ public class RunGame extends JPanel{
                if(detectorColisiones.BorderCollisionsRight(player, colisiones) == true
                        || detectorColisiones.BorderCollisionsLeft(player, colisiones) == true
                        || detectorColisiones.collisionsCenter(player, colisiones)==true){
-
+                   
                    detenerProcesos();
+                   sonido.reproducirSonidoExplosion();
                    explosion.animacionExplosion(player, timerGame);
                    playerColisiona = true;
                    
                }
                
-               
-               /**
-                * Validar colisiones de todos los enemigos.
-                */
-               for( Enemy enemigos : enemyList){
-                   
-                    if(enemigos.getEnemy().isVisible()){
-                        
-                        //Player => Enemigos
-                        if(detectorColisiones.collisionPlayerEnemy(player, enemigos)==true
-                                && enemigos.isNoComprobar()==false){
-                            detenerProcesos();
-                            explosion.animacionExplosion(player, timerGame);
-                            playerColisiona = true;
-                        }
-                        else{    
-                            //Enemigo => Obstaculos
-                            detectorColisiones.BorderCollisionsEnemyRight(enemigos, colisiones, 55);
-                            detectorColisiones.BorderCollisionsEnemyLeft(enemigos, colisiones, 55);
-                            detectorColisiones.collisionsCenterEnemy(enemigos, colisiones);
+               else{
+                    /**
+                     * Validar colisiones de todos los enemigos.
+                     */
+                    for( Enemy enemigos : enemyList){
 
-                            /**
-                             * Colisiones de balas con otros componentes
-                             */
-                            for(Shoot balas: shootList){
+                         if(enemigos.getEnemy().isVisible()){
 
-                                    /**
-                                     * Enemigo => Balas
-                                     */
-                                    if(enemigos.getEnemy().getY()+enemigos.getEnemy().getHeight() > balas.getShoot().getY()
-                                            && enemigos.getEnemy().getY() < balas.getShoot().getY()
-                                            && enemigos.getEnemy().getX() < balas.getShoot().getX()
-                                            && enemigos.getEnemy().getX() + enemigos.getEnemy().getWidth() > balas.getShoot().getX()){
+                             //Player => Enemigos
+                             if(detectorColisiones.collisionPlayerEnemy(player, enemigos)==true
+                                     && enemigos.isNoComprobar()==false){
+                                 detenerProcesos();
+                                 explosion.animacionExplosion(player, timerGame);
+                                 sonido.reproducirSonidoExplosion();
+                                 playerColisiona = true;
+                             }
+                             else{    
+                                 //Enemigo => Obstaculos
+                                 detectorColisiones.BorderCollisionsEnemyRight(enemigos, colisiones, 55);
+                                 detectorColisiones.BorderCollisionsEnemyLeft(enemigos, colisiones, 55);
+                                 detectorColisiones.collisionsCenterEnemy(enemigos, colisiones);
 
-                                            /**
-                                             * Si elimina un TIE +30
-                                             */                                            
-                                            if(enemigos instanceof TIE){
-                                                enemigos.setNoComprobar(true);
-                                                explosion.animacionExplosion(enemigos);
-                                                Score += 30;
-                                                
-                                            }
-                                            /**
-                                             * Si elimina un asteroide +50
-                                             */
-                                            else if(enemigos instanceof Asteroid){
-                                                Score += 50;
-                                                enemigos.getEnemy().setVisible(false);
-                                                enemigos.getEnemy().setLocation(-600, 0);                   
-                                                
-                                            }
-                                            
-                                            
-                                            
+                                 /**
+                                  * Colisiones de balas con otros componentes
+                                  */
+                                 for(Shoot balas: shootList){
 
-                                            balas.getShoot().setVisible(false);
-                                            balas.getShoot().setLocation(-100, 0);
+                                         /**
+                                          * Enemigo => Balas
+                                          */
+                                         if(enemigos.getEnemy().getY()+enemigos.getEnemy().getHeight() > balas.getShoot().getY()
+                                                 && enemigos.getEnemy().getY() < balas.getShoot().getY()
+                                                 && enemigos.getEnemy().getX() < balas.getShoot().getX()
+                                                 && enemigos.getEnemy().getX() + enemigos.getEnemy().getWidth() > balas.getShoot().getX()
+                                                 && enemigos.isNoComprobar()==false){
 
-                                            panelScore.setIntScore(Score);
-                                    } 
+                                                 sonido.reproducirSonidoExplosion();
 
-                                    /**
-                                     * Bala => fuels
-                                     */                             
-                                    for(Fuel fuel: fuelList){
+                                                 /**
+                                                  * Si elimina un TIE +30
+                                                  */                                            
+                                                 if(enemigos instanceof TIE){
 
-                                         if(fuel.getFuel().getY()+fuel.getFuel().getHeight() > balas.getShoot().getY()
-                                            && fuel.getFuel().getY() < balas.getShoot().getY()
-                                            && fuel.getFuel().getX() < balas.getShoot().getX()
-                                            && fuel.getFuel().getX() + fuel.getFuel().getWidth() > balas.getShoot().getX()){
+                                                     enemigos.setNoComprobar(true);
+                                                     explosion.animacionExplosion(enemigos);                                              
+                                                     Score += 30;
 
-                                                /**
-                                                 * Si elimina un combustible -20
-                                                 */
-                                                int auxScore = Score-20;
+                                                 }
+                                                 /**
+                                                  * Si elimina un asteroide +50
+                                                  */
+                                                 else if(enemigos instanceof Asteroid){
 
-                                                if(auxScore <= 0){
-                                                    Score = 0;
-                                                } else{
-                                                    Score = auxScore;
-                                                }
+                                                     enemigos.getEnemy().setVisible(false);
+                                                     enemigos.getEnemy().setLocation(-600, 0);
+                                                     Score += 50;                  
 
-                                                panelScore.setIntScore(Score);
+                                                 }
 
-                                                fuel.getFuel().setVisible(false);
-                                                fuel.getFuel().setLocation(-600, 0);
+                                                 balas.getShoot().setVisible(false);
+                                                 balas.getShoot().setLocation(-100, 0);
 
-                                                balas.getShoot().setVisible(false);
-                                                balas.getShoot().setLocation(-100, 0);
+                                                 panelScore.setIntScore(Score);
+                                         } 
+
+                                         /**
+                                          * Bala => fuels
+                                          */                             
+                                         for(Fuel fuel: fuelList){
+
+                                              if(fuel.getFuel().getY()+fuel.getFuel().getHeight() > balas.getShoot().getY()
+                                                 && fuel.getFuel().getY() < balas.getShoot().getY()
+                                                 && fuel.getFuel().getX() < balas.getShoot().getX()
+                                                 && fuel.getFuel().getX() + fuel.getFuel().getWidth() > balas.getShoot().getX()){
+
+                                                     /**
+                                                      * Si elimina un combustible -20
+                                                      */
+                                                     int auxScore = Score-20;
+
+                                                     if(auxScore <= 0){
+                                                         Score = 0;
+                                                     } else{
+                                                         Score = auxScore;
+                                                     }
+
+                                                     panelScore.setIntScore(Score);
+
+                                                     fuel.getFuel().setVisible(false);
+                                                     fuel.getFuel().setLocation(-600, 0);
+
+                                                     balas.getShoot().setVisible(false);
+                                                     balas.getShoot().setLocation(-100, 0);
+
+                                              }
 
                                          }
 
-                                    }
+                                 }
 
-                            }
+                                 //Si el enemigo sale del mapa
+                                 if(enemigos.getEnemy().getY() >= 650){
+                                     enemigos.getEnemy().setVisible(false);
+                                 }
+                             }
+                         }                     
+                    }
 
-                            //Si el enemigo sale del mapa
-                            if(enemigos.getEnemy().getY() >= 650){
-                                enemigos.getEnemy().setVisible(false);
-                            }
+                    /**
+                     *  Colisiones player y fuel
+                     */
+                    for( Fuel fuel : fuelList){
+
+                        if(detectorColisiones.collisionFuel(player, fuel)==true){
+                            fuel.getFuel().setLocation(-600, 0);
+                            fuel.getFuel().setVisible(false);
+
+                            panelScore.getFuel().setValue(100);
                         }
-                    }                     
-               }
-               
-               /**
-                *  Colisiones player y fuel
-                */
-               for( Fuel fuel : fuelList){
-                   
-                   if(detectorColisiones.collisionFuel(player, fuel)==true){
-                       fuel.getFuel().setLocation(-600, 0);
-                       fuel.getFuel().setVisible(false);
-                       
-                       panelScore.getFuel().setValue(100);
-                   }
-               
-               }
+
+                    }
                           
-               
+               }
            }
            
        });
@@ -406,7 +412,7 @@ public class RunGame extends JPanel{
        /**
         * ESCUCHADORA ENCARGADA DE GENERAR DISPAROS
         */
-       vieneESC = false; 
+       ESC = false; 
        if( execute == 0 ){
            super.addKeyListener(new KeyListener(){
             @Override
@@ -422,6 +428,7 @@ public class RunGame extends JPanel{
                 
                 if((e.getKeyCode() == KeyEvent.VK_SPACE) && (dejarDisparar == false)){
                     shootList.add(new Shoot(player.getPlayer().getX()+(player.getPlayer().getWidth()/2)-2));
+                    sonido.reproducirSonidoShoot();
                     addShoot();                  
                 }
                 /**
@@ -429,12 +436,12 @@ public class RunGame extends JPanel{
                  */
                 if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
                    detenerProcesos();
-                   vieneESC = true;
+                   ESC = true;
                 }
                 else if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                    if(timerGame.isRunning() || vieneESC){
+                    if(timerGame.isRunning() || ESC){
                         reiniciarProcesos();
-                        vieneESC = false;
+                        ESC = false;
                     }
                     
                 }
@@ -455,7 +462,7 @@ public class RunGame extends JPanel{
          if(panelScore.getFuel().getValue()<=0){
              //Resto vidas Al Player
             panelScore.setIntLives(panelScore.getIntLives()-1);
-             System.out.println(namePlayer+" => SIN COMBUSTIBLE");
+             //System.out.println(namePlayer+" => SIN COMBUSTIBLE");
              panelScore.getFuel().setValue(100);
          }
          if(playerColisiona == true){
@@ -478,14 +485,14 @@ public class RunGame extends JPanel{
           */
          if(panelScore.getIntLives()==0){
              TERMINA_JUEGO = true;
-             System.out.println(namePlayer+" =>SIN VIDAS");
+             //System.out.println(namePlayer+" =>SIN VIDAS");
          }
          /**
           * Validando el tiempo de Juego = 0;
           */
          if(panelScore.getIntTiempo()==0){
              TERMINA_JUEGO = true;                
-             System.out.println(namePlayer+" =>SIN TIEMPO");                   
+             //System.out.println(namePlayer+" =>SIN TIEMPO");                   
          }
 
 
@@ -501,6 +508,7 @@ public class RunGame extends JPanel{
      */
     private void gameOver(){
         
+        sonido.pararSonidoJuego();
         timerGame.stop();
         player.setMover_Left(0);
         player.setMover_Right(0);
@@ -511,6 +519,7 @@ public class RunGame extends JPanel{
         panelScore.setVisible(false);
         dejarDisparar = true;
         
+        
         /**
          * Guardar en el archivo
          */
@@ -519,7 +528,7 @@ public class RunGame extends JPanel{
         execute++;      
         RunGame.super.removeAll();
         RunGame.super.setFocusable(false);
-        
+        sonido.reproducirSonidoMenu();
         removeAll();
         panelScore.removeAll();
         refMenu.setVisible(true);

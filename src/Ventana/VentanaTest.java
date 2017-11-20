@@ -8,18 +8,11 @@ package Ventana;
 import Game.PanelScore;
 import Game.RunGame;
 import Graficos.Creditos;
+import Sounds.EfectosSonido;
 import Graficos.Instrucciones;
 import Graficos.Menu;
 import Graficos.Top10;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -37,6 +30,7 @@ public class VentanaTest extends JFrame{
     private Instrucciones instrucciones;
     private Creditos creditos;
     private Top10 top10;
+    private EfectosSonido sonido;
     
     public VentanaTest(){
         
@@ -70,6 +64,9 @@ public class VentanaTest extends JFrame{
         top10 = new Top10();
         top10.setVisible(false);
         
+        //SONIDO
+        sonido = new EfectosSonido();
+        sonido.reproducirSonidoMenu();
         
         super.add(panelScore);
         super.add(game);
@@ -94,14 +91,15 @@ public class VentanaTest extends JFrame{
         menu.getJugar().addMouseListener(new MouseAdapter(){
             
             public void mouseClicked(java.awt.event.MouseEvent e){
-                
+                             
                 game.setNamePlayer(JOptionPane.showInputDialog(null, null, "Nombre del Jugador", JOptionPane.PLAIN_MESSAGE));
+                sonido.pararSonidoMenu();
                 menu.setVisible(false); 
                 game.initComponents();                           
                 game.getPanelScore().initComponents();
                 game.getPanelScore().start();
                 game.getPanelScore().setVisible(true);
-                game.run();              
+                game.run();
                          
             }
             
