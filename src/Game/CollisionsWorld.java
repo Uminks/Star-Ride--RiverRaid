@@ -1,6 +1,7 @@
 
 package Game;
 
+import Sounds.EfectosSonido;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
@@ -15,15 +16,19 @@ public class CollisionsWorld {
     private final int ALTO_EXTREMO = 4200;
     public int SPEED = 5;
     private boolean changeCollisions;
+    private EfectosSonido sonido;
     
     private JLabel []conjuntoCollisionsRight;  
     private JLabel []conjuntoCollisionsLeft; 
     private JLabel collisionsCenter;
     
+    private int Acelerar;
+    
   
     public CollisionsWorld(){
         
-                
+        Acelerar = 0;
+        sonido = new EfectosSonido();
         conjuntoCollisionsLeft = new JLabel[4];        
         conjuntoCollisionsRight = new JLabel[4];
         collisionsCenter = new JLabel(new ImageIcon("Resources/world/colisionCenter.gif"));
@@ -105,13 +110,20 @@ public class CollisionsWorld {
     public void eventos(JPanel game, final PanelScore panelScore){
         game.addKeyListener(new KeyListener(){
             @Override
-            public void keyTyped(KeyEvent e) {}
+            public void keyTyped(KeyEvent e) {          
+            }
 
             @Override
             public void keyPressed(KeyEvent e) {
                 
+                
                 if(e.getKeyCode() == KeyEvent.VK_UP && SPEED >0){  
-
+                    
+                    if( Acelerar == 0){
+                       Acelerar = 1;
+                       sonido.reproducirSonidoAcelerar(); 
+                    }
+                    
                     panelScore.getFuel().setValue(panelScore.getFuel().getValue()-1);                    
                     SPEED = 20;                     
                 }                            
@@ -121,8 +133,13 @@ public class CollisionsWorld {
             @Override
             public void keyReleased(KeyEvent e) {
                 
-                if(e.getKeyCode() == KeyEvent.VK_UP){ 
+                if(e.getKeyCode() == KeyEvent.VK_UP){      
                     SPEED = 5;
+                    if(Acelerar == 1){
+                        Acelerar = 0;
+                        sonido.pararSonidoAcelerar();
+                    }
+                    
                 }
                     
                 

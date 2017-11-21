@@ -19,6 +19,10 @@ public class EfectosSonido {
     private AudioClip clipShoot;
     private AudioClip clipExplosion;
     private AudioClip clipJuego;
+    private AudioClip clipClick;
+    private AudioClip clipAcelerar;
+    private AudioClip clipEnergy;
+    private AudioClip clipJuego2;
     
     public EfectosSonido(){
         URL url = getClass().getResource("laser.WAV");
@@ -29,6 +33,14 @@ public class EfectosSonido {
         clipMenu = Applet.newAudioClip(url);
         url = getClass().getResource("juego.mid");
         clipJuego = Applet.newAudioClip(url);
+        url = getClass().getResource("Beep.WAV");
+        clipClick = Applet.newAudioClip(url);
+        url = getClass().getResource("Acelerar.wav");
+        clipAcelerar = Applet.newAudioClip(url);
+        url = getClass().getResource("EnergyTake.wav");
+        clipEnergy = Applet.newAudioClip(url);
+        url = getClass().getResource("juego2.wav");
+        clipJuego2 = Applet.newAudioClip(url);
     }
     
     public void reproducirSonidoMenu(){  
@@ -53,6 +65,38 @@ public class EfectosSonido {
     
     public void reproducirSonidoExplosion(){     
             clipExplosion.play();
+    }
+    
+    public void reproducirSonidoClick(){
+        clipClick.play();
+    }
+    
+    public void pararSonidoClick(){
+        clipClick.stop();
+    }
+    
+    public void reproducirSonidoAcelerar(){
+        clipAcelerar.play();
+    }
+    
+    public void pararSonidoAcelerar(){
+        clipAcelerar.stop();
+    }
+    
+    public void reproducirSonidoTomarEnergia(){
+        clipEnergy.play();
+    }
+    
+    public void pararSonidoTomarEnergia(){
+        clipEnergy.stop();
+    }
+    
+    public void reproducirSonidoJuego2(){
+        clipJuego2.loop();
+    }
+    
+    public void pararSonidoJuego2(){
+        clipJuego2.stop();
     }
 
 }

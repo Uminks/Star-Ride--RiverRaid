@@ -7,9 +7,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
-/**
- * @author Brayan Montañez
- */
 public class AnimacionExplosion {
     
     private Timer timer;

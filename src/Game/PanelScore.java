@@ -21,7 +21,7 @@ import javax.swing.JProgressBar;
 import javax.swing.Timer;
 
 /**
- * Clase encargada de registrar el combustible, score y otro registros
+ * Clase encargada de registrar el combustible, score y otro registros.
  * 
  */
 public class PanelScore extends JPanel{

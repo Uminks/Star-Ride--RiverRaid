@@ -13,6 +13,7 @@ import Graficos.Instrucciones;
 import Graficos.Menu;
 import Graficos.Top10;
 import java.awt.event.MouseAdapter;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -37,6 +38,8 @@ public class VentanaTest extends JFrame{
         super.setBounds(0, 0, 800, 600);
         super.setTitle("Star Raid");
         super.setResizable(false);
+        
+        super.setIconImage(new ImageIcon("Resources/icon.png").getImage());
         super.setLocationRelativeTo(null);
         
         super.setFocusable(false);
@@ -91,9 +94,10 @@ public class VentanaTest extends JFrame{
         menu.getJugar().addMouseListener(new MouseAdapter(){
             
             public void mouseClicked(java.awt.event.MouseEvent e){
-                             
-                game.setNamePlayer(JOptionPane.showInputDialog(null, null, "Nombre del Jugador", JOptionPane.PLAIN_MESSAGE));
+                
+                sonido.reproducirSonidoClick();
                 sonido.pararSonidoMenu();
+                game.setNamePlayer(JOptionPane.showInputDialog(null, null, "Nombre del Jugador", JOptionPane.PLAIN_MESSAGE));              
                 menu.setVisible(false); 
                 game.initComponents();                           
                 game.getPanelScore().initComponents();
@@ -114,6 +118,7 @@ public class VentanaTest extends JFrame{
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e){
                 
+                sonido.reproducirSonidoClick();
                 menu.setVisible(false);
                 top10.setVisible(true);
                 top10.Update();
@@ -128,6 +133,7 @@ public class VentanaTest extends JFrame{
             
             public void mouseClicked(java.awt.event.MouseEvent e){
                 
+                sonido.reproducirSonidoClick();
                 menu.setVisible(false);
                 instrucciones.setVisible(true);
                 instrucciones.animation();
@@ -144,6 +150,7 @@ public class VentanaTest extends JFrame{
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e){
                 
+                sonido.reproducirSonidoClick();
                 menu.setVisible(false);
                 creditos.setVisible(true);
                          
@@ -157,6 +164,7 @@ public class VentanaTest extends JFrame{
             
             public void mouseClicked(java.awt.event.MouseEvent e){
                 
+                sonido.reproducirSonidoClick();
                 menu.setVisible(true);
                 instrucciones.setVisible(false);
                 instrucciones.getAnimationArrows().stop();
@@ -172,6 +180,7 @@ public class VentanaTest extends JFrame{
              
             public void mouseClicked(java.awt.event.MouseEvent e){
                 
+                sonido.reproducirSonidoClick();
                 menu.setVisible(true);
                 creditos.setVisible(false);
                 
@@ -187,7 +196,8 @@ public class VentanaTest extends JFrame{
         
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e){
-            
+                
+                sonido.reproducirSonidoClick();
                 menu.setVisible(true);
                 top10.setVisible(false);
                 

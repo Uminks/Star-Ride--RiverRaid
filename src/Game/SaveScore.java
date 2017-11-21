@@ -12,8 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Brayan Montañez
+ * Clase que permite leer los datos en tiempo de ejecucion para ser escritos en el archivo.
  */
 public class SaveScore {
     

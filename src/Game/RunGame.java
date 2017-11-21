@@ -19,10 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import Sounds.EfectosSonido;
 
-/**
- *
- * @author Brayan Montañez
- */
+
 public class RunGame extends JPanel{
     
     private World mundo;
@@ -231,7 +228,7 @@ public class RunGame extends JPanel{
      * Ejecuta todas la funciones de ejecuciones del juego
      */
     public void run(){
-        sonido.reproducirSonidoJuego();
+        sonido.reproducirSonidoJuego2();
         /**
          * Inicio cuenta Regresiva del Tiempo de Juego
          */
@@ -397,7 +394,7 @@ public class RunGame extends JPanel{
                         if(detectorColisiones.collisionFuel(player, fuel)==true){
                             fuel.getFuel().setLocation(-600, 0);
                             fuel.getFuel().setVisible(false);
-
+                            sonido.reproducirSonidoTomarEnergia();
                             panelScore.getFuel().setValue(100);
                         }
 
