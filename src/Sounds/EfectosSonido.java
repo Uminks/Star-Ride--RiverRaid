@@ -29,33 +29,31 @@ public class EfectosSonido {
         clipShoot = Applet.newAudioClip(url);
         url = getClass().getResource("explosion.wav");
         clipExplosion = Applet.newAudioClip(url);
-        url = getClass().getResource("menu.mid");
-        clipMenu = Applet.newAudioClip(url);
-        url = getClass().getResource("juego.mid");
-        clipJuego = Applet.newAudioClip(url);
         url = getClass().getResource("Beep.WAV");
         clipClick = Applet.newAudioClip(url);
-        url = getClass().getResource("Acelerar.wav");
-        clipAcelerar = Applet.newAudioClip(url);
-        url = getClass().getResource("EnergyTake.wav");
-        clipEnergy = Applet.newAudioClip(url);
-        url = getClass().getResource("juego2.wav");
-        clipJuego2 = Applet.newAudioClip(url);
     }
     
-    public void reproducirSonidoMenu(){  
+    public void reproducirSonidoMenu(){
+        URL url = getClass().getResource("menu.mid");
+        clipMenu = Applet.newAudioClip(url);  
         clipMenu.loop();
     }
     
     public void pararSonidoMenu(){
+        URL url = getClass().getResource("menu.mid");
+        clipMenu = Applet.newAudioClip(url);
         clipMenu.stop();
     }
     
     public void reproducirSonidoJuego(){
+        URL url = getClass().getResource("juego.mid");
+        clipJuego = Applet.newAudioClip(url);
         clipJuego.loop();
     }
     
     public void pararSonidoJuego(){
+        URL url = getClass().getResource("juego.mid");
+        clipJuego = Applet.newAudioClip(url);
         clipJuego.stop();
     }
     
@@ -76,26 +74,38 @@ public class EfectosSonido {
     }
     
     public void reproducirSonidoAcelerar(){
+        URL url = getClass().getResource("Acelerar.wav");
+        clipAcelerar = Applet.newAudioClip(url);
         clipAcelerar.play();
     }
     
     public void pararSonidoAcelerar(){
+        URL url = getClass().getResource("Acelerar.wav");
+        clipAcelerar = Applet.newAudioClip(url);
         clipAcelerar.stop();
     }
     
     public void reproducirSonidoTomarEnergia(){
+        URL url = getClass().getResource("EnergyTake.wav");
+        clipEnergy = Applet.newAudioClip(url);
         clipEnergy.play();
     }
     
     public void pararSonidoTomarEnergia(){
+        URL url = getClass().getResource("EnergyTake.wav");
+        clipEnergy = Applet.newAudioClip(url);
         clipEnergy.stop();
     }
     
     public void reproducirSonidoJuego2(){
+        URL url = getClass().getResource("juego2.wav");
+        clipJuego2 = Applet.newAudioClip(url);
         clipJuego2.loop();
     }
     
     public void pararSonidoJuego2(){
+        URL url = getClass().getResource("juego2.wav");
+        clipJuego2 = Applet.newAudioClip(url);
         clipJuego2.stop();
     }
 

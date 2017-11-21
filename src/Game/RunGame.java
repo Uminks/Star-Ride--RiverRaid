@@ -505,7 +505,7 @@ public class RunGame extends JPanel{
      */
     private void gameOver(){
         
-        sonido.pararSonidoJuego();
+        sonido.pararSonidoJuego2();
         timerGame.stop();
         player.setMover_Left(0);
         player.setMover_Right(0);
