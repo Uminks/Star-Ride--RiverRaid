@@ -87,20 +87,20 @@ public class Instrucciones extends JPanel{
         volverMenu.addMouseListener(new MouseEvent());
         
         left = new JLabel();
-        left.setBounds(60, 370, 60, 60);
+        left.setBounds(90, 370, 60, 60);
         left.setIcon(AsignLabelDimension(new ImageIcon(pathBaseLabel+"Izquierda-1.png"), left));
     
         up = new JLabel();
-        up.setBounds(120, 310, 60, 60);
+        up.setBounds(150, 310, 60, 60);
         up.setIcon(AsignLabelDimension(new ImageIcon(pathBaseLabel+"Arriba-1.png"), up));
         
         right = new JLabel();
-        right.setBounds(180, 370, 60, 60);
+        right.setBounds(210, 370, 60, 60);
         right.setIcon(AsignLabelDimension(new ImageIcon(pathBaseLabel+"Derecha-1.png"), right));
         
         
         keyboard = new JLabel();
-        keyboard.setBounds(100, 430, 120, 70);
+        keyboard.setBounds(130, 430, 120, 70);
         keyboard.setIcon(AsignLabelDimension(new ImageIcon(pathBaseLabel+"KeyBoard-1.png"), keyboard));
         
         fuel = new JLabel();

@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import Sounds.EfectosSonido;
+import javax.swing.JLabel;
 
 /**
  * Metodo de Ejecución de Juego
@@ -42,7 +43,7 @@ public class RunGame extends JPanel{
     /** Objeto encargado de evaluar las colisiones en el juego*/
     private DetectorDeColisiones detectorColisiones;
     /** Timer de Juego*/
-    private Timer timerGame;
+    private Timer timerGame, pause;
     /** Puntaje Obtenido y tiempo de Juego*/
     private int Score, timeOFgame;
     /** Variables de validación múltiple*/
@@ -62,8 +63,14 @@ public class RunGame extends JPanel{
     /** Efectos de Sonido*/
     private EfectosSonido sonido;
     
-    /** Gestor de Bugs para el sonido**/
+    /** Gestor de Bugs para el sonido.**/
     private boolean menuActive;
+    
+    /** Imagen de Game Over al Final. **/
+    private JLabel gameover;
+    
+    /** Contador para los segundos del Game Over al Final. **/
+    private int cont;
     
     public RunGame(PanelScore panelScore, Menu menu){
         
@@ -80,6 +87,10 @@ public class RunGame extends JPanel{
         
         this.setLayout(null);
         this.setBounds(0, 0, 600, 600);
+        gameover = new JLabel(new ImageIcon("Resources/gameover.gif"));
+        gameover.setBounds(160, 120, 400, 300);
+        this.add(gameover);
+        gameover.setVisible(false);
         mundo = new World();
         menuActive = false;
         player = new Player();
@@ -538,14 +549,16 @@ public class RunGame extends JPanel{
     /**
      * Metodo que remueve todos los componentes usados anteriormente y ejecuta GAME OVER
      */
-    private void gameOver(){
+    public void gameOver(){
         
         
         if(menuActive){
             sonido.pararSonidoJuego2();
             menuActive = false; 
         }
-        
+ 
+        pause();
+      
         timerGame.stop();
         player.setMover_Left(0);
         player.setMover_Right(0);
@@ -553,22 +566,15 @@ public class RunGame extends JPanel{
         panelScore.getTimerFuel().stop();
         addRandomEnemy.stop();
         addRandomFuel.stop();
-        panelScore.setVisible(false);
+        
         dejarDisparar = true;
-        
-        
+        RunGame.super.setFocusable(false);
         /**
          * Guardar en el archivo
          */
         guardarTOP = new SaveScore(namePlayer, Score);
-        
-        execute++;      
-        RunGame.super.removeAll();
-        RunGame.super.setFocusable(false);
         sonido.reproducirSonidoMenu();
-        removeAll();
-        panelScore.removeAll();
-        refMenu.setVisible(true);
+        
     }
     
     /**
@@ -609,6 +615,40 @@ public class RunGame extends JPanel{
     
     
     /**
+     * SIMULAR LA PAUSA DEL GAMEOVER.
+     */
+    public void pause(){
+        
+        cont = 0;
+        gameover.setVisible(true);
+        
+        pause = new Timer(1000, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {               
+                cont++;
+            }
+        });
+        
+        pause.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(cont == 5){               
+                    pause.stop();
+                    panelScore.setVisible(false);
+                    execute++;      
+                    RunGame.super.removeAll();
+                    removeAll();
+                    panelScore.removeAll();
+                    refMenu.setVisible(true);
+                }
+            }     
+        });
+        
+        pause.start();
+        
+    }
+    
+    /**
      * Utilizado para iniciar el Panel de Score en la Ventana
      * @return panelScore Panel del registro de score
      */
@@ -633,5 +673,7 @@ public class RunGame extends JPanel{
     }
   
 }
+
+
 
 

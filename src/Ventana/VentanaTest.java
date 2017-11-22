@@ -191,7 +191,7 @@ public class VentanaTest extends JFrame{
         });
         
         /**
-         * Boton de menu para ir a creditos
+         * Boton de menu para ir a creditos.
          */
         menu.getCreditos().addMouseListener(new MouseAdapter(){
             
@@ -206,7 +206,7 @@ public class VentanaTest extends JFrame{
         });
         
         /**
-         * Boton de Instrucciones para volver al menu pricipal
+         * Boton de Instrucciones para volver al menu pricipal.
          */
         instrucciones.getVolverMenu().addMouseListener(new MouseAdapter(){
             
