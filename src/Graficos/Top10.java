@@ -31,17 +31,22 @@ import javax.swing.JPanel;
  */
 public class Top10 extends JPanel {
     
-    
+    /** Ruta de la Imagen de fondo*/
     private String pathBase = "Resources/Top 10/top10.png";
+    /** Imagen de Fondo */
     private Image background = new ImageIcon(pathBase).getImage();
+    /** JLabel que muestra la imagen de volver al menu*/
     private JLabel volverMenu;
+    /** Ruta de los recursos usados */
     private String pathBaseLabel = "Resources/Top 10/";
+    /** Lector del archivo donde está almacenado el Top10*/
     private BufferedReader archivo;
     private String Nombres[];
     private int Puntos[];
     private JLabel Name[];
     private JLabel Score[];
     private JLabel Position[];
+    /** Fuente usada esta sección*/
     private Font StarJedi;
     private static int TopPlayers = -1;
     

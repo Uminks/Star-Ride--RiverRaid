@@ -12,16 +12,22 @@ import javax.swing.JLabel;
 
 /**
  * Clase abstracta de enemigos
- * 
+ * @author Brayan Montañez & Luis Vargas
  */
 public abstract class Enemy {
     
+    /** Coordenada inicial en y*/
     private int InitY;
+    /** Coordenada inicial en x*/
     private int InitX;
+    /** velocidad con la que se mueve horizontalmente*/
     private int Velocidad;
+    /** imagen del enemigo*/
     private ImageIcon image;
     private Icon icon;
+    /** Campo donde está contenido el nemigo*/
     private JLabel enemy;
+    /** Necesario para que cuando explote no comparar su colision*/
     private boolean noComprobar;
         
     /**

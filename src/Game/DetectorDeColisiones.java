@@ -7,7 +7,7 @@ package Game;
 
 /**
  *  Clase encargada de detectar cualquier tipo de colisión con obtetos de Límites
- * 
+ *  @author Brayan Montañez & Luis Vargas
  */
 public class DetectorDeColisiones {
     

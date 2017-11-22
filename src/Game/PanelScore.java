@@ -22,17 +22,21 @@ import javax.swing.Timer;
 
 /**
  * Clase encargada de registrar el combustible, score y otro registros.
- * 
+ * @author Brayan Montañez & Luis Vargas
  */
 public class PanelScore extends JPanel{
-    
+    /** Fuente usada en esta sección*/
     private Font StarJedi;
+    /** Campo donde está contenida la palabra combustible*/
     private JLabel iconFuel;
+    /** Barra que refleja el consumo de combustible*/
     private JProgressBar fuel;
     private int intTiempo, intScore, intLives;
     private JLabel iconTiempo, iconScore, iconLives;
     private JLabel tiempo, score, lives;
+    /** Manejadores del consumo de combustible  y tiempo de juego*/
     private Timer timerFuel, timerTiempo;
+    /** Imagen de fondo de este panel*/
     private Image background = new ImageIcon("Resources/ScoreBorder.gif").getImage();;
     
     public PanelScore(){

@@ -28,16 +28,22 @@ import javax.swing.border.LineBorder;
 
 /**
  * Aqui se muestran las instrucciones de juego
- *
+ *@author Brayan Montañez & Luis Vargas
  */
 public class Instrucciones extends JPanel{
     
+    /** Ruta de la imagen de fondo de esta sección*/
     private String pathBase = "Resources/Instrucciones/fondo.png";
+    /** Imagen de fondo*/
     private Image background = new ImageIcon(pathBase).getImage();
+    /** Ruta donde están los recursos usados en esta sección*/
     private String pathBaseLabel = "Resources/Instrucciones/";
+    /** labels usados en la sección*/
     private JLabel volverMenu, up, left, right, keyboard, fuel, pause, enter;
     private JLabel combustible, pausa, reanudar;
+    /** Animación de las teclas de interacción*/
     private Timer animationArrows;
+    /** Fuente usada en esta sección*/
     private Font StarJedi;
     int changeImage;
     

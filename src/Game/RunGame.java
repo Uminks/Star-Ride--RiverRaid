@@ -19,27 +19,47 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import Sounds.EfectosSonido;
 
-
+/**
+ * Metodo de Ejecución de Juego
+ * @author Brayan Montañez & Luis Vargas
+ */
 public class RunGame extends JPanel{
     
+    /** Objeto del mundo(galaxia)*/
     private World mundo;
+    /** Jugador */
     private Player player;
+    /** Almacena cada disparo que se ejecuta*/
     private ArrayList<Shoot> shootList;
+    /** Almacena cada enemigo que se genera*/
     private ArrayList<Enemy> enemyList;
+    /** Almacena cada combustible que se genera*/
     private ArrayList<Fuel> fuelList;
+    /** Timers de agregar aleatoriamente enemigos y combustible*/
     private Timer addRandomEnemy, addRandomFuel;
+    /** Objeto de colisiones*/
     private CollisionsWorld colisiones;
+    /** Objeto encargado de evaluar las colisiones en el juego*/
     private DetectorDeColisiones detectorColisiones;
+    /** Timer de Juego*/
     private Timer timerGame;
+    /** Puntaje Obtenido y tiempo de Juego*/
     private int Score, timeOFgame;
+    /** Variables de validación múltiple*/
     private boolean dejarDisparar,playerColisiona, TERMINA_JUEGO, ESC;
     private static int execute = 0;
        
+    /** Objeto panel lateral controlador de registros*/
     private PanelScore panelScore;
+    /** Hace referencia al objeto menu*/
     private Menu refMenu; 
+    /** Nombre del Jugador*/
     private String namePlayer;
+    /** Encargado de guardar en el archivo el nuevo jugador con su puntaje*/
     private SaveScore guardarTOP;
+    /** Encargada de dar animación de Explosion a los personajes*/
     private AnimacionExplosion explosion;
+    /** Efectos de Sonido*/
     private EfectosSonido sonido;
     
     public RunGame(PanelScore panelScore, Menu menu){

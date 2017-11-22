@@ -7,15 +7,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/** Clase encargada de crear y acargar al Mundo */
+/** 
+ * Clase encargada de crear y cargar al Mundo
+ * @author Brayan Montañez & Luis Vargas
+ */
 public class World {
-    //CONSTANTES
+    /** constantes de ancho y alto de las colisiones*/
     private final int ANCHO = 600;
     private final int ALTO = 2400;
     
+    /** Labels en los que se muestra el mundo*/
     private JLabel world_1;
     private JLabel world_2;
+    /** Velocidad con que baja el mundo*/
     private int SPEED;
+    /** Indica cuando debe cambiar de mundo*/
     private boolean changeWorld;
     
     public World(){

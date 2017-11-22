@@ -11,17 +11,21 @@ import javax.swing.JPanel;
 /** Clase encargada de Cargar y crear las colisiones del mundo */
 public class CollisionsWorld {
     
-    //CONSTANTES
     private final int ANCHO_EXTREMO = 50;
     private final int ALTO_EXTREMO = 4200;
+    /** Velocidad con la que bajan los obstáculos*/
     public int SPEED = 5;
+    /** Usada para cambiar entre un mundo de obstaculos y otro*/
     private boolean changeCollisions;
     private EfectosSonido sonido;
     
-    private JLabel []conjuntoCollisionsRight;  
+    /** Obstaculos por derecha*/
+    private JLabel []conjuntoCollisionsRight; 
+    /** Ostaculos por izquierda*/
     private JLabel []conjuntoCollisionsLeft; 
+    /** Ostaculo central*/
     private JLabel collisionsCenter;
-    
+    /** Bjar más rapido*/
     private int Acelerar;
     
   

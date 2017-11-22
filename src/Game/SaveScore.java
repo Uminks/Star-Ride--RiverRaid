@@ -13,12 +13,16 @@ import java.util.logging.Logger;
 
 /**
  * Clase que permite leer los datos en tiempo de ejecucion para ser escritos en el archivo.
+ * @author Brayan Montañez & Luis Vargas
  */
 public class SaveScore {
-    
+    /** Salida de escritura en el archivo*/
     private PrintWriter escribir;
+    /** Entrada de Lectura del archivo*/
     private BufferedReader leer;
+    /** Almacena el score para luego aplicar burbuja*/
     private int []vecScore;
+    /** Vector de nombres paralelo al score*/
     private String []vecNombres;
     
     public SaveScore(String nombreNuevo, int scoreNuevo){
@@ -36,6 +40,9 @@ public class SaveScore {
         
     }
     
+    /**
+     * Metodo encargado de leer el archivo
+     */
     private void leer(){
         String linea;
         StringTokenizer token;
@@ -75,7 +82,9 @@ public class SaveScore {
         aplicarBurbuja();
     }
     
-    
+    /**
+     * Aplicando burbuja para ordenar el top 10
+     */
     private void aplicarBurbuja(){
         int temp;
         String aux;
@@ -105,6 +114,9 @@ public class SaveScore {
         
     }
     
+    /**
+     * Metodo encargado de escribir el nuevo archivo
+     */
     private void escribirNuevoArchivo(){
         try {
             

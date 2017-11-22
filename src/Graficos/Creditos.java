@@ -17,12 +17,16 @@ import javax.swing.JPanel;
 
 /**
  * Esta clase contiene el Panel Creditos.
+ * @author  Brayan Montañes & Luis Vargas
  */
 public class Creditos extends JPanel{
     
+    /** Ruta de la imagen de fondo*/
     private String pathBase = "Resources/Creditos/Creditos.png";
+    /** Imagen de fondo*/
     private Image background = new ImageIcon(pathBase).getImage();
     private JLabel volverMenu;
+    /** Ruta de los recursos*/
     private String pathBaseLabel = "Resources/Creditos/";
     
     public Creditos(){

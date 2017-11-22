@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  * Aqui se encuentran encapsulados todos los efectos de sonido
- * @author Brayan Montañez
+ * @author Brayan Montañez & Luis Vargas
  */
 public class EfectosSonido {
     

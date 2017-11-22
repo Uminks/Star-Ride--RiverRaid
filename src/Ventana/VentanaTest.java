@@ -12,6 +12,7 @@ import Sounds.EfectosSonido;
 import Graficos.Instrucciones;
 import Graficos.Menu;
 import Graficos.Top10;
+import java.awt.HeadlessException;
 import java.awt.event.MouseAdapter;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -86,6 +87,37 @@ public class VentanaTest extends JFrame{
         this.setVisible(true);
     }
     
+    /**
+     * Metodo que valida el ingreso correcto del nombre
+     * @param nombre es el string ingresado por el usuario
+     * @return numero este numero identifica la accion a ejecutar
+     */
+    public int validarNombre(String nombre){
+        
+        // 0 error
+        // 1 continue al juego
+        // 2 regrese al menu 
+        try{
+
+            if(nombre.length() > 8){
+                JOptionPane.showMessageDialog(null, "Ingresó más de Ocho caracteres", "Error", JOptionPane.ERROR_MESSAGE);
+                return 0;
+            } else if(nombre.replaceAll(" ", "").length()==0){
+                JOptionPane.showMessageDialog(null, "Está en blanco ingrese un nombre", "Error", JOptionPane.ERROR_MESSAGE);                      
+                return 0;
+            }
+            else{
+                return 1;
+            }
+
+         }
+         catch(Exception e){
+             return 2;
+         }
+        
+    }
+    
+    
     public void eventos(){
         
         /**
@@ -97,13 +129,29 @@ public class VentanaTest extends JFrame{
                 
                 sonido.reproducirSonidoClick();
                 sonido.pararSonidoMenu();
-                game.setNamePlayer(JOptionPane.showInputDialog(null, null, "Nombre del Jugador", JOptionPane.PLAIN_MESSAGE));              
-                menu.setVisible(false); 
-                game.initComponents();                           
-                game.getPanelScore().initComponents();
-                game.getPanelScore().start();
-                game.getPanelScore().setVisible(true);
-                game.run();
+          
+                int continuar=0;
+                String nombre;
+                
+                do{
+                    
+                     nombre = JOptionPane.showInputDialog(null, "Nombre del Jugador", "");
+                     continuar = validarNombre(nombre);
+                     
+                }while(continuar == 0);
+                
+                
+                if(continuar == 1){
+                    
+                    game.setNamePlayer(nombre);              
+                    menu.setVisible(false); 
+                    game.initComponents();                           
+                    game.getPanelScore().initComponents();
+                    game.getPanelScore().start();
+                    game.getPanelScore().setVisible(true);
+                    game.run();
+                    
+                }
                          
             }
             

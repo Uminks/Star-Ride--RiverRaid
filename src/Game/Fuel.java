@@ -13,14 +13,17 @@ import javax.swing.JLabel;
 
 /**
  * De esta clase se instancian objetos de Tipo fuel en el mapa 
- *
+ * @author Brayan Montañez & Luis Vargas
  */
 public class Fuel {
-    
+    /** Coordenada inicial en x*/
     private int InitY;
+    /** Coordenada inicial en y*/
     private int InitX;
+    /** Imagen combustible*/
     private ImageIcon image;
     private Icon icon;
+    /** Campo donde está el combustible*/
     private JLabel fuel;
 
     public Fuel(int InitX, int InitY) {

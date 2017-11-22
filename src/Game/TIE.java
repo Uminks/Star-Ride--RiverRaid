@@ -14,7 +14,7 @@ import javax.swing.Timer;
 
 /**
  * Esta clase hereda de Enemigo, implementa el metodo desplazarse.
- * 
+ * @author Brayan Montañez & Luis Vargas
  */
 public class TIE extends Enemy {
     

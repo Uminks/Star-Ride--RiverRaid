@@ -7,10 +7,17 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
+/**
+ * Encargada de Reproducir la animación de explosión
+ * @author Brayan Montañez & Luis Vargas
+ */
 public class AnimacionExplosion {
     
+    /** Limita el tiempo de ejecución de la animación*/
     private Timer timer;
+    /** LLeva un conteo del tiempo*/
     private int cont; 
+    /** Icono que se reproduce*/
     private ImageIcon icon;
     
     /**

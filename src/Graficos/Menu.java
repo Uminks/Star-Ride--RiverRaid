@@ -21,18 +21,26 @@ import javax.swing.JPanel;
 
 /**
  * Esta clase contiene todos los elementos del Menu y componen propiamente el mismo.
- * 
+ * @author Brayan Montañez & Luis Vargas
  */
 public class Menu extends JPanel {
     
-    private static int BWidth = 300;
-    private static int BHeight = 50;
-    private static int X = 450;
-    private static int Y = 100;
-    private static String PathBase = "Resources/BotonesMenu/";
-    private static String png = ".png";
-    private static String BackUrl = "Resources/Portada.png";
-    private static Image background = new ImageIcon(BackUrl).getImage();
+    /** Ancho de los botones*/
+    private final int BWidth = 300;
+    /** Alto de los botones*/
+    private final int BHeight = 50;
+    /** Posición inical en x*/
+    private final int X = 450;
+    /** Posición inicial en y*/
+    private final int Y = 100;
+    /** Ruta donde se encuentran los recursos de esta sección*/
+    private final String PathBase = "Resources/BotonesMenu/";
+    private final String png = ".png";
+    /** Ruta de la portada de fondo menu*/
+    private final String BackUrl = "Resources/Portada.png";
+    /** Imagen Fondo menú*/
+    private final Image background = new ImageIcon(BackUrl).getImage();
+    /** Label usados para simular botones*/
     private JLabel jugar, instrucciones, top10, creditos, salir;
     
     

@@ -11,14 +11,18 @@ import javax.swing.Timer;
 
 /**
  * Clase encargada de gestionar el disparo 
+ * @author Brayan Montañez & Luis Vargas
  */
 public class Shoot {
     
+    /** Constantes de ancho y alto del disparo*/
     private int ANCHO = 5;
     private int ALTO = 25;
     
+    /** Label que muestra el disparo*/
     private JLabel shoot;
-    Timer timerDisparo;
+    /** Timer de Recorrido del disparo*/
+    private Timer timerDisparo;
     
     public Shoot(int x){
         

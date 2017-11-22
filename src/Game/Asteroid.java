@@ -14,12 +14,14 @@ import javax.swing.Timer;
 
 /**
  * Clase Asteroide hereda de Enemy.
- * 
+ * @author Brayan Montañez & Luis Vargas
  */
 public class Asteroid extends Enemy{
-    
+    /** Timer que ejecuta la animación*/
     private Timer animacion;
+    /** Itinerador de imagenes*/
     private int Frame;
+    /** Imagenes que hacen la animación*/
     private String Frames[] = {
         "a10000.png",
         "a10001.png",

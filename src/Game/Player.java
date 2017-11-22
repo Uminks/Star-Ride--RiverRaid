@@ -10,14 +10,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-/** Clase encargada de crear y cargar al Jugador */
+/**
+ * Clase encargada de crear y cargar al Jugador
+ * @author Brayan Montañez & Luis Vargas
+ */
 public class Player {
     
-    //CONSTANTES
+    /** Ancho del Personaje*/
     private final int ANCHO = 80;
+    /** ALto del Personaje*/
     private final int ALTO = 100;
+    /** Pixeles que se mueve a la izquierda*/
     private int Mover_Left = 10;
+    /** Pixeles que se mueve a la derecha*/
     private int Mover_Right = 10;
+    /** Campo donde está el jugador*/
     private JLabel player;
     
     public Player(){
