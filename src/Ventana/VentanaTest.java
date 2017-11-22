@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Brayan Montañez & Luis Vargas
+ * @version 1.0
  */
 
 public class VentanaTest extends JFrame{
