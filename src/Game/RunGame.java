@@ -62,6 +62,9 @@ public class RunGame extends JPanel{
     /** Efectos de Sonido*/
     private EfectosSonido sonido;
     
+    /** Gestor de Bugs para el sonido**/
+    private boolean menuActive;
+    
     public RunGame(PanelScore panelScore, Menu menu){
         
         this.panelScore = panelScore;
@@ -78,6 +81,7 @@ public class RunGame extends JPanel{
         this.setLayout(null);
         this.setBounds(0, 0, 600, 600);
         mundo = new World();
+        menuActive = false;
         player = new Player();
         enemyList = new ArrayList<Enemy>();
         shootList = new ArrayList<Shoot>();
@@ -248,11 +252,22 @@ public class RunGame extends JPanel{
      * Ejecuta todas la funciones de ejecuciones del juego
      */
     public void run(){
-        sonido.reproducirSonidoJuego2();
+        
+        /**
+         * Detectar si no es Menu para arrancar con la musica, Gestion del bug.
+         */
+        if(!menuActive){
+            sonido.reproducirSonidoJuego2();
+            sonido.pararSonidoMenu();
+            menuActive = true;
+        }
+
         /**
          * Inicio cuenta Regresiva del Tiempo de Juego
          */
         panelScore.timeGame(timeOFgame);
+        
+
         
 
         /**
@@ -525,7 +540,12 @@ public class RunGame extends JPanel{
      */
     private void gameOver(){
         
-        sonido.pararSonidoJuego2();
+        
+        if(menuActive){
+            sonido.pararSonidoJuego2();
+            menuActive = false; 
+        }
+        
         timerGame.stop();
         player.setMover_Left(0);
         player.setMover_Right(0);
