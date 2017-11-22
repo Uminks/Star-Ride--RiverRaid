@@ -32,8 +32,6 @@ public class EfectosSonido {
         clipExplosion = Applet.newAudioClip(url);
         url = getClass().getResource("Beep.WAV");
         clipClick = Applet.newAudioClip(url);
-        url2 = getClass().getResource("juego2.wav");
-        clipJuego2 = Applet.newAudioClip(url2);
     }
     
     public void reproducirSonidoMenu(){
@@ -101,10 +99,14 @@ public class EfectosSonido {
     }
     
     public void reproducirSonidoJuego2(){
+        url2 = getClass().getResource("juego2.wav");
+        clipJuego2 = Applet.newAudioClip(url2);
         clipJuego2.loop();
     }
     
     public void pararSonidoJuego2(){
+        url2 = getClass().getResource("juego2.wav");
+        clipJuego2 = Applet.newAudioClip(url2);
         clipJuego2.stop();
     }
 
