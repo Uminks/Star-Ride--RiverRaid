@@ -105,8 +105,6 @@ public class EfectosSonido {
     }
     
     public void pararSonidoJuego2(){
-        url2 = getClass().getResource("juego2.wav");
-        clipJuego2 = Applet.newAudioClip(url2);
         clipJuego2.stop();
     }
 
