@@ -23,6 +23,7 @@ public class EfectosSonido {
     private AudioClip clipAcelerar;
     private AudioClip clipEnergy;
     private AudioClip clipJuego2;
+    private URL url2;
     
     public EfectosSonido(){
         URL url = getClass().getResource("laser.WAV");
@@ -31,8 +32,8 @@ public class EfectosSonido {
         clipExplosion = Applet.newAudioClip(url);
         url = getClass().getResource("Beep.WAV");
         clipClick = Applet.newAudioClip(url);
-        url = getClass().getResource("juego2.wav");
-        clipJuego2 = Applet.newAudioClip(url);
+        url2 = getClass().getResource("juego2.wav");
+        clipJuego2 = Applet.newAudioClip(url2);
     }
     
     public void reproducirSonidoMenu(){

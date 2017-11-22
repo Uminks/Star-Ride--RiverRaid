@@ -88,7 +88,7 @@ public class RunGame extends JPanel{
         this.setLayout(null);
         this.setBounds(0, 0, 600, 600);
         gameover = new JLabel(new ImageIcon("Resources/gameover.gif"));
-        gameover.setBounds(160, 120, 400, 300);
+        gameover.setBounds(100, 120, 400, 300);
         this.add(gameover);
         gameover.setVisible(false);
         mundo = new World();
